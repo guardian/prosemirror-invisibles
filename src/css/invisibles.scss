@@ -1,0 +1,21 @@
+.invisible {
+  color: gray;
+  display: inline-block;
+  font-weight: 400;
+  font-style: normal;
+  pointer-events: none;
+  user-select: none;
+  width: 0;
+}
+
+.invisible--space:before {
+  content: "·";
+}
+
+.invisible--break:before {
+  content: "¬";
+}
+
+.invisible--par:before {
+  content: "¶";
+}
