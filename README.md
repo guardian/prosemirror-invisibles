@@ -4,7 +4,7 @@ A simple implementation of invisible characters in [ProseMirror](https://prosemi
 ---
 
 ## Install
-Not currently on npm
+`npm install @guardian/prosemirror-invisibles`
 
 ## Usage
 Add the plugin to the state and pass the invisibles you would like to display in the document.
