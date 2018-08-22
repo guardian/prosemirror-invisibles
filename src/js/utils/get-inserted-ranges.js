@@ -3,8 +3,8 @@ export default ({ mapping }) => {
   mapping.maps.forEach((stepMap, i) => {
     stepMap.forEach((oldStart, oldEnd, newStart, newEnd) => {
       ranges.push([
-        mapping.slice(0, i).map(newStart),
-        mapping.slice(0, i).map(newEnd)
+        mapping.slice(i + 1).map(newStart),
+        mapping.slice(i + 1).map(newEnd)
       ]);
     });
   });
