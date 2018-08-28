@@ -3561,7 +3561,7 @@ exports.MarkType = MarkType;
 exports.ContentMatch = ContentMatch;
 exports.DOMParser = DOMParser;
 exports.DOMSerializer = DOMSerializer;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$1);
@@ -5308,7 +5308,7 @@ exports.RemoveMarkStep = RemoveMarkStep;
 exports.ReplaceStep = ReplaceStep;
 exports.ReplaceAroundStep = ReplaceAroundStep;
 exports.replaceStep = replaceStep;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$2);
@@ -6472,7 +6472,7 @@ exports.Transaction = Transaction;
 exports.EditorState = EditorState;
 exports.Plugin = Plugin;
 exports.PluginKey = PluginKey;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist);
@@ -6548,7 +6548,7 @@ function scanFor(node, off, targetNode, targetOff, dir) {
     if (node == targetNode && off == targetOff) { return true }
     if (off == (dir < 0 ? 0 : nodeSize(node)) || node.nodeType == 3 && node.nodeValue == "\ufeff") {
       var parent = node.parentNode;
-      if (parent.nodeType != 1 || hasBlockDesc(node) || atomElements.test(node.nodeName)) { return false }
+      if (parent.nodeType != 1 || hasBlockDesc(node) || atomElements.test(node.nodeName) || node.contentEditable == "false") { return false }
       off = domIndex(node) + (dir < 0 ? 0 : 1);
       node = parent;
     } else if (node.nodeType == 1) {
@@ -7281,6 +7281,7 @@ ViewDesc.prototype.setSelection = function setSelection (anchor, head, root) {
   // Selection.extend can be used to create an 'inverted' selection
   // (one where the focus is before the anchor), but not all
   // browsers support it yet.
+  console.log(headDOM.offset, anchorDOM.offset);
   if (domSel.extend) {
     range.setEnd(anchorDOM.node, anchorDOM.offset);
     range.collapse(false);
@@ -8723,7 +8724,8 @@ function hasSelection(view) {
     // Firefox will raise 'permission denied' errors when accessing
     // properties of `sel.anchorNode` when it's in a generated CSS
     // element.
-    return view.dom.contains(sel.anchorNode.nodeType == 3 ? sel.anchorNode.parentNode : sel.anchorNode)
+    return view.dom.contains(sel.anchorNode.nodeType == 3 ? sel.anchorNode.parentNode : sel.anchorNode) &&
+      (view.editable || view.dom.contains(sel.focusNode.nodeType == 3 ? sel.focusNode.parentNode : sel.focusNode))
   } catch(_) {
     return false
   }
@@ -11189,7 +11191,7 @@ exports.Decoration = Decoration;
 exports.DecorationSet = DecorationSet;
 exports.__serializeForClipboard = serializeForClipboard;
 exports.__parseFromClipboard = parseFromClipboard;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$3);
@@ -11360,7 +11362,7 @@ var schema = new dist$1.Schema({nodes: nodes, marks: marks});
 exports.nodes = nodes;
 exports.marks = marks;
 exports.schema = schema;
-
+//# sourceMappingURL=schema-basic.js.map
 });
 
 unwrapExports(schemaBasic);
@@ -11615,7 +11617,7 @@ exports.wrapInList = wrapInList;
 exports.splitListItem = splitListItem;
 exports.liftListItem = liftListItem;
 exports.sinkListItem = sinkListItem;
-
+//# sourceMappingURL=schema-list.js.map
 });
 
 unwrapExports(schemaList);
@@ -11856,7 +11858,7 @@ function keydownHandler(bindings) {
 
 exports.keymap = keymap;
 exports.keydownHandler = keydownHandler;
-
+//# sourceMappingURL=keymap.js.map
 });
 
 unwrapExports(keymap_1);
@@ -12510,7 +12512,7 @@ exports.undo = undo;
 exports.redo = redo;
 exports.undoDepth = undoDepth;
 exports.redoDepth = redoDepth;
-
+//# sourceMappingURL=history.js.map
 });
 
 unwrapExports(history_1);
@@ -13184,7 +13186,7 @@ exports.chainCommands = chainCommands;
 exports.pcBaseKeymap = pcBaseKeymap;
 exports.macBaseKeymap = macBaseKeymap;
 exports.baseKeymap = baseKeymap;
-
+//# sourceMappingURL=commands.js.map
 });
 
 unwrapExports(commands);
@@ -17831,7 +17833,7 @@ exports.Decoration = Decoration;
 exports.DecorationSet = DecorationSet;
 exports.__serializeForClipboard = serializeForClipboard;
 exports.__parseFromClipboard = parseFromClipboard;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$7);
@@ -17955,7 +17957,7 @@ function dropPos(slice, $pos) {
 }
 
 exports.dropCursor = dropCursor;
-
+//# sourceMappingURL=dropcursor.js.map
 });
 
 unwrapExports(dropcursor);
@@ -22579,7 +22581,7 @@ exports.Decoration = Decoration;
 exports.DecorationSet = DecorationSet;
 exports.__serializeForClipboard = serializeForClipboard;
 exports.__parseFromClipboard = parseFromClipboard;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$9);
@@ -22779,7 +22781,7 @@ function drawGapCursor(state) {
 
 exports.gapCursor = gapCursor;
 exports.GapCursor = GapCursor;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$8);
@@ -23623,7 +23625,7 @@ exports.redoItem = redoItem;
 exports.wrapItem = wrapItem;
 exports.blockTypeItem = blockTypeItem;
 exports.menuBar = menuBar;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$10);
@@ -23814,7 +23816,7 @@ exports.closeSingleQuote = closeSingleQuote;
 exports.smartQuotes = smartQuotes;
 exports.wrappingInputRule = wrappingInputRule;
 exports.textblockTypeInputRule = textblockTypeInputRule;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$11);
@@ -24458,7 +24460,7 @@ exports.buildMenuItems = buildMenuItems;
 exports.buildKeymap = buildKeymap;
 exports.buildInputRules = buildInputRules;
 exports.exampleSetup = exampleSetup;
-
+//# sourceMappingURL=index.js.map
 });
 
 unwrapExports(dist$4);
