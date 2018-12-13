@@ -32,3 +32,6 @@ export default builders => {
 export { default as space } from './decorations/space';
 export { default as hardBreak } from './decorations/hard-break';
 export { default as paragraph } from './decorations/paragraph';
+
+export { default as createDeco } from './utils/create-deco';
+export { default as textBetween } from './utils/text-between';
