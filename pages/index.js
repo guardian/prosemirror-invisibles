@@ -23,7 +23,7 @@ new EditorView(document.querySelector('#editor'), {
     ),
     plugins: [
       ...exampleSetup({ schema: mySchema }),
-      invisibles([hardBreak, paragraph, space])
+      invisibles([hardBreak(), paragraph(), space()])
     ]
   })
 });
