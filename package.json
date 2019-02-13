@@ -1,6 +1,6 @@
 {
   "name": "@guardian/prosemirror-invisibles",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A plugin to show invisibles in prosemirror",
   "main": "dist/invisibles.js",
   "license": "MIT",
