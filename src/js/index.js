@@ -30,6 +30,7 @@ export default builders => {
 };
 
 export { default as space } from './decorations/space';
+export { default as character } from './decorations/character';
 export { default as hardBreak } from './decorations/hard-break';
 export { default as paragraph } from './decorations/paragraph';
 
