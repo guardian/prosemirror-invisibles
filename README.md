@@ -17,7 +17,7 @@ new EditorView(document.querySelector("#editor"), {
       document.querySelector("#content")
     ),
     plugins: [
-      invisibles([space, hardBreak, paragraph])
+      invisibles([space(), hardBreak(), paragraph()])
     ]
   })
 });
