@@ -1,11 +1,18 @@
-export default (from, to, doc) => {
-  let positions = [];
+import { Node } from 'prosemirror-model';
+
+interface Position {
+  pos: number;
+  text: string;
+}
+
+export default (from: number, to: number, doc: Node) => {
+  let positions: Position[] = [];
   doc.nodesBetween(from, to, (node, pos) => {
     if (node.isText) {
       const offset = Math.max(from, pos) - pos;
       positions.push({
         pos: pos + offset,
-        text: node.text.slice(offset, to - pos)
+        text: node.text?.slice(offset, to - pos) || '',
       });
     }
   });
