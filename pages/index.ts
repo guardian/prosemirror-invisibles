@@ -16,10 +16,10 @@ const mySchema = new Schema({
   marks: schema.spec.marks
 });
 
-new EditorView(document.querySelector('#editor'), {
+new EditorView(document.querySelector('#editor') as Element, {
   state: EditorState.create({
     doc: DOMParser.fromSchema(mySchema).parse(
-      document.querySelector('#content')
+      document.querySelector('#content') as Element
     ),
     plugins: [
       ...exampleSetup({ schema: mySchema }),

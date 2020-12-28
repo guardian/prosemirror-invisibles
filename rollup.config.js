@@ -1,24 +1,26 @@
 import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
-import { eslint } from "rollup-plugin-eslint";
 import scss from "rollup-plugin-scss";
-import typescript from "@rollup/plugin-typescript"
+import commonjs from "@rollup/plugin-commonjs";
+import eslint from "@rollup/plugin-eslint";
+import typescript from "@rollup/plugin-typescript";
+import babel from "@rollup/plugin-babel";
 
 export default [
   {
-    input: "src/js/index.ts",
+    input: "src/ts/index.ts",
     output: {
       file: "dist/invisibles.js",
       format: "cjs"
     },
     plugins: [
+      typescript(),
       scss({
         output: "dist/invisibles.css"
       }),
       eslint({
         exclude: ["node_modules/**"]
       }),
-      typescript()
+      babel()
     ]
   },
   {
@@ -30,6 +32,7 @@ export default [
       name: "Pages"
     },
     plugins: [
+      typescript(),
       scss({
         output: "pages/dist/styles.css"
       }),
@@ -37,7 +40,6 @@ export default [
         exclude: ["node_modules/**"]
       }),
       resolve({ browser: true }),
-      typescript(),
       commonjs(),
     ]
   }
