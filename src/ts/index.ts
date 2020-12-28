@@ -3,7 +3,7 @@ import { DecorationSet } from "prosemirror-view";
 import ToInvisible from "./invisibles/invisible";
 import getInsertedRanges from "./utils/get-inserted-ranges";
 
-export default (builders: ToInvisible[]) => {
+export default (builders: ToInvisible[]): Plugin<DecorationSet> => {
   const addDecosBetween: ToInvisible = (from: number, to: number, doc, decos) =>
     builders.reduce((newDecos, fn) => fn(from, to, doc, newDecos), decos);
 

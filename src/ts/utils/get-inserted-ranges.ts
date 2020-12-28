@@ -1,7 +1,9 @@
 import { Transaction } from "prosemirror-state";
 
-export default ({ mapping }: Transaction) => {
-  let ranges: [from: number, to: number][] = [];
+type Range = [from: number, to: number];
+
+export default ({ mapping }: Transaction): Range[]  => {
+  const ranges: Range[] = [];
   mapping.maps.forEach((stepMap, i) => {
     stepMap.forEach((_oldStart, _oldEnd, newStart, newEnd) => {
       ranges.push([

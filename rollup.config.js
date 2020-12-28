@@ -1,9 +1,8 @@
-import resolve from "rollup-plugin-node-resolve";
 import scss from "rollup-plugin-scss";
 import commonjs from "@rollup/plugin-commonjs";
 import eslint from "@rollup/plugin-eslint";
-import typescript from "@rollup/plugin-typescript";
-import babel from "@rollup/plugin-babel";
+import typescript from "rollup-plugin-typescript2";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 export default [
   {
@@ -13,14 +12,13 @@ export default [
       format: "cjs"
     },
     plugins: [
-      typescript(),
       scss({
         output: "dist/invisibles.css"
       }),
       eslint({
         exclude: ["node_modules/**"]
       }),
-      babel()
+      typescript()
     ]
   },
   {
@@ -32,14 +30,14 @@ export default [
       name: "Pages"
     },
     plugins: [
-      typescript(),
       scss({
         output: "pages/dist/styles.css"
       }),
       eslint({
         exclude: ["node_modules/**"]
       }),
-      resolve({ browser: true }),
+      typescript(),
+      nodeResolve({ browser: true }),
       commonjs(),
     ]
   }

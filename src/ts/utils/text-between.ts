@@ -5,8 +5,8 @@ interface Position {
   text: string;
 }
 
-export default (from: number, to: number, doc: Node) => {
-  let positions: Position[] = [];
+export default (from: number, to: number, doc: Node): Position[] => {
+  const positions: Position[] = [];
   doc.nodesBetween(from, to, (node, pos) => {
     if (node.isText) {
       const offset = Math.max(from, pos) - pos;

@@ -1,7 +1,6 @@
 {
   "include": ["src/ts"],
   "compilerOptions": {
-    "rootDir": "src/ts",
     "lib": ["DOM"],
     "target": "es6",
     "strict": true,
