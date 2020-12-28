@@ -1,5 +1,5 @@
-import { Node } from 'prosemirror-model';
-import { DecorationSet } from 'prosemirror-view';
+import { Node } from "prosemirror-model";
+import { DecorationSet } from "prosemirror-view";
 
 type ToInvisible = (
   from: number,

@@ -1,7 +1,7 @@
-import { Node } from 'prosemirror-model';
-import { DecorationSet } from 'prosemirror-view';
-import createDeco from '../utils/create-deco';
-import ToInvisible from './invisible';
+import { Node } from "prosemirror-model";
+import { DecorationSet } from "prosemirror-view";
+import createDeco from "../utils/create-deco";
+import ToInvisible from "./invisible";
 
 export default (
   type: string,

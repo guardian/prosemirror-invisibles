@@ -1,7 +1,7 @@
-import { Plugin, AllSelection } from 'prosemirror-state';
-import { DecorationSet } from 'prosemirror-view';
-import ToInvisible from './invisibles/invisible';
-import getInsertedRanges from './utils/get-inserted-ranges';
+import { Plugin, AllSelection } from "prosemirror-state";
+import { DecorationSet } from "prosemirror-view";
+import ToInvisible from "./invisibles/invisible";
+import getInsertedRanges from "./utils/get-inserted-ranges";
 
 export default (builders: ToInvisible[]) => {
   const addDecosBetween: ToInvisible = (from: number, to: number, doc, decos) =>
@@ -30,12 +30,12 @@ export default (builders: ToInvisible[]) => {
   });
 };
 
-export { default as character } from './invisibles/character';
-export { default as node } from './invisibles/node';
+export { default as character } from "./invisibles/character";
+export { default as node } from "./invisibles/node";
 
-export { default as space } from './invisibles/space';
-export { default as hardBreak } from './invisibles/hard-break';
-export { default as paragraph } from './invisibles/paragraph';
+export { default as space } from "./invisibles/space";
+export { default as hardBreak } from "./invisibles/hard-break";
+export { default as paragraph } from "./invisibles/paragraph";
 
-export { default as createDeco } from './utils/create-deco';
-export { default as textBetween } from './utils/text-between';
+export { default as createDeco } from "./utils/create-deco";
+export { default as textBetween } from "./utils/text-between";

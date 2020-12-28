@@ -1,4 +1,4 @@
-import { default as character } from './character';
+import { default as character } from "./character";
 
-export default (predicate = (char: string) => char === ' ') =>
-  character('space')(predicate);
+export default (predicate = (char: string) => char === " ") =>
+  character("space")(predicate);

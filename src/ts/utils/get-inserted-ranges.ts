@@ -1,4 +1,4 @@
-import { Transaction } from 'prosemirror-state';
+import { Transaction } from "prosemirror-state";
 
 export default ({ mapping }: Transaction) => {
   let ranges: [from: number, to: number][] = [];

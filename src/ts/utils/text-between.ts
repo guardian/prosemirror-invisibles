@@ -1,4 +1,4 @@
-import { Node } from 'prosemirror-model';
+import { Node } from "prosemirror-model";
 
 interface Position {
   pos: number;
@@ -12,7 +12,7 @@ export default (from: number, to: number, doc: Node) => {
       const offset = Math.max(from, pos) - pos;
       positions.push({
         pos: pos + offset,
-        text: node.text?.slice(offset, to - pos) || '',
+        text: node.text?.slice(offset, to - pos) || "",
       });
     }
   });
