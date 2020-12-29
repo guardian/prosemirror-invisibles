@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "src/ts",
     "lib": ["DOM"],
-    "target": "es6",
+    "target": "es5",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
