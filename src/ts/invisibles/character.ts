@@ -1,10 +1,10 @@
 import textBetween from "utils/text-between";
 import createDeco from "utils/create-deco";
-import ToInvisible from "./invisible";
+import AddDecorationsForInvisible from "../utils/invisible";
 
 export default (type: string) => (
   predicate: (text: string) => boolean
-): ToInvisible => (from, to, doc, decos) =>
+): AddDecorationsForInvisible => (from, to, doc, decos) =>
   textBetween(from, to, doc).reduce(
     (decos1, { pos, text }) =>
       text.split("").reduce((decos2, char, i) => {

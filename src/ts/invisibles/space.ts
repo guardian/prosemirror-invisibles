@@ -1,5 +1,5 @@
 import { default as character } from "./character";
-import ToInvisible from "./invisible";
+import AddDecorationsForInvisible from "../utils/invisible";
 
-export default (predicate = (char: string) => char === " "): ToInvisible =>
+export default (predicate = (char: string) => char === " "): AddDecorationsForInvisible =>
   character("space")(predicate);
