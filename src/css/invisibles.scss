@@ -1,6 +1,11 @@
 .invisible {
   pointer-events: none;
   user-select: none;
+  /* Chrome in particular dislikes doing the right thing
+   * with carets and inline elements when contenteditable
+   * is 'false'. See e.g. https://github.com/ProseMirror/prosemirror/issues/1061
+   */
+  display: inline-block;
 }
 
 .invisible:before {
