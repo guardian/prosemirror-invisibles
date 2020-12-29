@@ -1,5 +1,5 @@
-import textBetween from "../utils/text-between";
-import createDeco from "../utils/create-deco";
+import textBetween from "utils/text-between";
+import createDeco from "utils/create-deco";
 import ToInvisible from "./invisible";
 
 export default (type: string) => (

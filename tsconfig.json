@@ -1,6 +1,7 @@
 {
   "include": ["src/ts"],
   "compilerOptions": {
+    "baseUrl": "src/ts",
     "lib": ["DOM"],
     "target": "es6",
     "strict": true,

@@ -1,5 +1,5 @@
 import { Node } from "prosemirror-model";
-import createDeco from "../utils/create-deco";
+import createDeco from "utils/create-deco";
 import ToInvisible from "./invisible";
 
 export default (
