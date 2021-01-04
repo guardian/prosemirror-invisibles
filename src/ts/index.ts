@@ -1,10 +1,9 @@
-import { Plugin, AllSelection, PluginKey } from "prosemirror-state";
+import { Plugin, AllSelection } from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
 import AddDecorationsForInvisible from "utils/invisible";
 import getInsertedRanges from "utils/get-inserted-ranges";
-import { getActionFromTransaction, PluginState, reducer } from "state";
+import { getActionFromTransaction, pluginKey, PluginState, reducer } from "state";
 
-export const pluginKey = new PluginKey<PluginState>("PROSEMIRROR_INVISIBLES_PLUGIN")
 
 /**
  * Create a plugin to render invisible characters. Accepts a list of
@@ -76,4 +75,5 @@ export { default as paragraph } from "invisibles/paragraph";
 export { default as createDeco } from "utils/create-deco";
 export { default as textBetween } from "utils/text-between";
 
+export { selectActiveState } from './state'
 export { commands } from "state";

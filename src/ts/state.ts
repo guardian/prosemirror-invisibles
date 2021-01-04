@@ -1,4 +1,4 @@
-import { EditorState, Transaction } from "prosemirror-state";
+import { EditorState, PluginKey, Transaction } from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
 
 /**
@@ -9,6 +9,16 @@ export interface PluginState {
   decorations: DecorationSet;
   isActive: boolean;
 }
+
+export const pluginKey = new PluginKey<PluginState>(
+  "PROSEMIRROR_INVISIBLES_PLUGIN"
+);
+
+/**
+ * Selectors
+ */
+export const selectActiveState = (state: EditorState): boolean =>
+  !!pluginKey.getState(state)?.isActive;
 
 /**
  * Actions
@@ -56,6 +66,17 @@ type Command = (
   dispatch?: (tr: Transaction) => void
 ) => boolean;
 
+const toggleActiveState = (): Command => (state, dispatch) => {
+  dispatch &&
+    dispatch(
+      state.tr.setMeta(
+        PROSEMIRROR_INVISIBLES_ACTION,
+        setActiveStateAction(!pluginKey.getState(state)?.isActive)
+      )
+    );
+  return true;
+};
+
 const setActiveState = (isActive: boolean): Command => (state, dispatch) => {
   dispatch &&
     dispatch(
@@ -67,4 +88,4 @@ const setActiveState = (isActive: boolean): Command => (state, dispatch) => {
   return true;
 };
 
-export const commands = { setActiveState };
+export const commands = { setActiveState, toggleActiveState };
