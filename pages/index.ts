@@ -4,7 +4,7 @@ import { Schema, DOMParser } from 'prosemirror-model';
 import { schema } from 'prosemirror-schema-basic';
 import { addListNodes } from 'prosemirror-schema-list';
 import { exampleSetup } from 'prosemirror-example-setup';
-import invisibles, { hardBreak, paragraph, space } from '../src/js';
+import createInvisiblesPlugin, { hardBreak, paragraph, space } from '../src/ts';
 
 import 'prosemirror-view/style/prosemirror.css';
 import 'prosemirror-menu/style/menu.css';
@@ -16,14 +16,14 @@ const mySchema = new Schema({
   marks: schema.spec.marks
 });
 
-new EditorView(document.querySelector('#editor'), {
+new EditorView(document.querySelector('#editor') as Element, {
   state: EditorState.create({
     doc: DOMParser.fromSchema(mySchema).parse(
-      document.querySelector('#content')
+      document.querySelector('#content') as Element
     ),
     plugins: [
       ...exampleSetup({ schema: mySchema }),
-      invisibles([hardBreak(), paragraph(), space()])
+      createInvisiblesPlugin([hardBreak(), paragraph(), space()])
     ]
   })
 });
