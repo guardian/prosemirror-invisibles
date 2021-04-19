@@ -1,4 +1,4 @@
-import createInvisiblesPlugin, { pluginKey } from "../";
+import createInvisiblesPlugin from "../";
 import space from "invisibles/space";
 import { addListNodes } from "prosemirror-schema-list";
 import { schema } from "prosemirror-schema-basic";
@@ -7,7 +7,7 @@ import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 import hardBreak from "invisibles/hard-break";
 import paragraph from "invisibles/paragraph";
-import { commands } from "state";
+import { commands, pluginKey } from "state";
 
 const testSchema = new Schema({
   nodes: addListNodes(schema.spec.nodes, "paragraph block*", "block"),
