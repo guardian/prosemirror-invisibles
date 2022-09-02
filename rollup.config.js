@@ -18,7 +18,11 @@ export default [
       eslint({
         exclude: ["node_modules/**"]
       }),
-      typescript()
+      typescript({
+        tsconfigOverride: {
+          compilerOptions: { declaration: true }
+        }
+      })
     ]
   },
   {
