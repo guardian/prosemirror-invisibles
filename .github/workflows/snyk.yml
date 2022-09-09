@@ -1,10 +1,9 @@
-# This action runs snyk monitor on every push to main
 name: Snyk
 
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
