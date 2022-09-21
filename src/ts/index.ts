@@ -62,7 +62,7 @@ const createInvisiblesPlugin = (
   });
 };
 
-export default createInvisiblesPlugin;
+export { createInvisiblesPlugin };
 
 export { default as character } from "invisibles/character";
 export { default as node } from "invisibles/node";
