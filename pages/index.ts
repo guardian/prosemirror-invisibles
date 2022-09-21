@@ -36,10 +36,11 @@ const view = new EditorView(document.querySelector("#editor") as Element, {
 });
 
 const toggle = document.getElementById("show-invisibles");
-toggle && toggle.addEventListener("change", (event) => {
-  const value = (event.currentTarget as HTMLInputElement).checked
-  commands.setActiveState(value)(view.state, view.dispatch);
-});
+toggle &&
+  toggle.addEventListener("change", (event) => {
+    const value = (event.currentTarget as HTMLInputElement).checked;
+    commands.setActiveState(value)(view.state, view.dispatch);
+  });
 
 (window as any).process = {};
 applyDevTools(view);
