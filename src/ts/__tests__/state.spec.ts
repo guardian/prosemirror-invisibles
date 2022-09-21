@@ -4,7 +4,7 @@ import { addListNodes } from "prosemirror-schema-list";
 import { schema } from "prosemirror-schema-basic";
 import { Schema, DOMParser } from "prosemirror-model";
 import { EditorState } from "prosemirror-state";
-import { EditorView } from "prosemirror-view";
+import { DecorationSet, EditorView } from "prosemirror-view";
 import hardBreak from "invisibles/hard-break";
 import paragraph from "invisibles/paragraph";
 import { commands, pluginKey } from "state";
@@ -17,7 +17,7 @@ const testSchema = new Schema({
 const createEditor = (htmlDoc: string, isActive: boolean) => {
   const contentElement = document.createElement("content");
   contentElement.innerHTML = htmlDoc;
-  return new EditorView(undefined, {
+  return new EditorView(contentElement, {
     state: EditorState.create({
       doc: DOMParser.fromSchema(testSchema).parse(contentElement),
       plugins: [createInvisiblesPlugin([hardBreak(), paragraph(), space()], isActive)],
@@ -25,7 +25,7 @@ const createEditor = (htmlDoc: string, isActive: boolean) => {
   });
 };
 
-const getDocDecorations = (editor: EditorView) => editor.someProp("decorations")(editor.state).find()
+const getDocDecorations = (editor: EditorView) => (editor.someProp("decorations")?.(editor.state) as DecorationSet).find()
 
 describe("State management", () => {
   describe("Active state", () => {

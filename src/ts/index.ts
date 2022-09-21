@@ -1,4 +1,4 @@
-import { Plugin, AllSelection } from "prosemirror-state";
+import { Plugin, AllSelection, EditorState } from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
 import AddDecorationsForInvisible from "utils/invisible";
 import getInsertedRanges from "utils/get-inserted-ranges";
@@ -19,7 +19,6 @@ const createInvisiblesPlugin = (
   builders: AddDecorationsForInvisible[],
   isActive = true
 ): Plugin<PluginState> => {
-  const emptyDecorationSet = new DecorationSet();
   const addDecosBetween: AddDecorationsForInvisible = (from, to, doc, decos) =>
     builders.reduce((newDecos, fn) => fn(from, to, doc, newDecos), decos);
 
@@ -55,9 +54,9 @@ const createInvisiblesPlugin = (
       },
     },
     props: {
-      decorations: function (state) {
+      decorations: function (state: EditorState) {
         const { isActive, decorations } = this.getState(state);
-        return isActive ? decorations : emptyDecorationSet;
+        return isActive ? decorations : DecorationSet.empty;
       },
     },
   });
