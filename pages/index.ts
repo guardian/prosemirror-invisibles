@@ -5,7 +5,8 @@ import { schema } from "prosemirror-schema-basic";
 import { addListNodes } from "prosemirror-schema-list";
 import { exampleSetup } from "prosemirror-example-setup";
 import applyDevTools from "prosemirror-dev-tools";
-import createInvisiblesPlugin, {
+import {
+  createInvisiblesPlugin,
   hardBreak,
   paragraph,
   space,

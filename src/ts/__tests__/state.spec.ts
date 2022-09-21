@@ -1,4 +1,4 @@
-import createInvisiblesPlugin from "../";
+import { createInvisiblesPlugin } from "../";
 import space from "invisibles/space";
 import { addListNodes } from "prosemirror-schema-list";
 import { schema } from "prosemirror-schema-basic";
