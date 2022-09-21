@@ -4,6 +4,7 @@ import { Schema, DOMParser } from "prosemirror-model";
 import { schema } from "prosemirror-schema-basic";
 import { addListNodes } from "prosemirror-schema-list";
 import { exampleSetup } from "prosemirror-example-setup";
+import applyDevTools from "prosemirror-dev-tools";
 import createInvisiblesPlugin, {
   hardBreak,
   paragraph,
@@ -14,7 +15,7 @@ import createInvisiblesPlugin, {
 import "prosemirror-view/style/prosemirror.css";
 import "prosemirror-menu/style/menu.css";
 import "prosemirror-example-setup/style/style.css";
-import "../src/css/invisibles.scss";
+import "../src/css/invisibles.css";
 
 const mySchema = new Schema({
   nodes: addListNodes(schema.spec.nodes, "paragraph block*", "block"),
@@ -38,3 +39,6 @@ toggle && toggle.addEventListener("change", (event) => {
   const value = (event.currentTarget as HTMLInputElement).checked
   commands.setActiveState(value)(view.state, view.dispatch);
 });
+
+(window as any).process = {};
+applyDevTools(view);
