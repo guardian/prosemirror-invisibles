@@ -15,9 +15,10 @@
     "watch:typecheck": "tsc --noEmit --watch",
     "build": "vite build && tsc --declaration --emitDeclarationOnly --outFile dist/index.d.ts",
     "test": "NODE_ENV=test jest test 'test/*.spec.js'",
-    "pages": "npm run build && http-server ./pages/dist",
+    "pages": "npm run build-pages && http-server ./pages/dist",
     "prepublishOnly": "yarn build",
     "format": "prettier --write './src/**/*.ts'",
+    "build-pages": "vite build -c vite.config.pages.ts",
     "publish-pages": "git subtree push --prefix pages/dist origin gh-pages"
   },
   "devDependencies": {

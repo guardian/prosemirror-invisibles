@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel=stylesheet href="./style.css">
+  <style>
+    .ProseMirror {
+      padding: 4px 8px 4px 14px;
+      line-height: 1.5;
+      outline: none;
+    }
+
+    .editor {
+      background: white;
+      color: black;
+      background-clip: padding-box;
+      border-radius: 4px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      padding: 5px 0;
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>ProseMirror Invisibles</h1>
+  <p>A plugin that uses decorations to show invisible characters in ProseMirror</p>
+  <input type="checkbox" id="show-invisibles" name="show-invisibles" checked>
+  <label for="show-invisibles">Show invisibles</label>
+  <div id=editor class="editor"></div>
+
+  <div class="hide" id="content">
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate magni harum labore explicabo maxime laborum quod
+      maiores iusto, aperiam, eaque voluptatibus ipsa repellat consequatur nulla iste hic ipsum nemo ullam.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br/><br/> Consequuntur ab suscipit assumenda harum nesciunt,
+      quas nisi neque aut veritatis tempora perspiciatis animi atque reiciendis dolorem cumque iure laborum, obcaecati accusantium?
+    </p>
+    <p></p>
+    <p></p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae veritatis perspiciatis, quidem nulla veniam iure
+      dolorum illo ratione quod tenetur tempore, alias unde dignissimos molestias eos. Laborum expedita natus saepe.</p>
+  </div>
+  <script type="module" src="./index.js"></script>
+</body>
+
+</html>
