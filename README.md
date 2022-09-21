@@ -1,6 +1,8 @@
 # prosemirror-invisibles
 A simple implementation of invisible characters in [ProseMirror](https://prosemirror.net/).
 
+Demo [here.](https://guardian.github.io/prosemirror-invisibles/)
+
 ---
 
 ## Install
