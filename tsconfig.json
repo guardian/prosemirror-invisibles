@@ -2,10 +2,12 @@
   "include": ["src/ts"],
   "compilerOptions": {
     "baseUrl": "src/ts",
-    "lib": ["DOM"],
+    "lib": ["dom", "esnext"],
     "target": "es5",
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   }
 }
