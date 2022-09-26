@@ -29,3 +29,15 @@
 .invisible--par:before {
   content: "¶";
 }
+
+.invisible--em-space:before {
+  content: "⨪";
+}
+
+.invisible--nb-space:before {
+  font-size: 15px;
+  vertical-align: bottom;
+  content: "^";
+}
+
+

@@ -10,6 +10,8 @@ import {
   hardBreak,
   paragraph,
   space,
+  emSpace,
+  nbSpace,
   commands,
 } from "../src/ts";
 
