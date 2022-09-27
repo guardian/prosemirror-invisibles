@@ -20,7 +20,7 @@ const createEditor = (htmlDoc: string, isActive: boolean) => {
   return new EditorView(contentElement, {
     state: EditorState.create({
       doc: DOMParser.fromSchema(testSchema).parse(contentElement),
-      plugins: [createInvisiblesPlugin([hardBreak(), paragraph(), space()], isActive)],
+      plugins: [createInvisiblesPlugin([hardBreak, paragraph, space], isActive)],
     }),
   });
 };

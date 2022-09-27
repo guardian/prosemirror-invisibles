@@ -64,8 +64,8 @@ const createInvisiblesPlugin = (
 
 export { createInvisiblesPlugin };
 
-export { default as character } from "invisibles/character";
-export { default as node } from "invisibles/node";
+export { createInvisibleDecosForCharacter } from "invisibles/character";
+export { createInvisibleDecosForNode } from "invisibles/node";
 
 export { default as space } from "invisibles/space";
 export { default as hardBreak } from "invisibles/hard-break";
