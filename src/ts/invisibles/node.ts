@@ -2,10 +2,11 @@ import { Node } from "prosemirror-model";
 import createDeco from "utils/create-deco";
 import AddDecorationsForInvisible from "../utils/invisible";
 
-export default (
+export const createInvisibleDecosForNode = (
   type: string,
-  toPosition: (node: Node, pos: number) => number
-) => (predicate: (node: Node) => boolean): AddDecorationsForInvisible => (
+  toPosition: (node: Node, pos: number) => number,
+  predicate: (node: Node) => boolean
+): AddDecorationsForInvisible => (
   from,
   to,
   doc,

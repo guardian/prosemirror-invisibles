@@ -2,7 +2,8 @@ import textBetween from "utils/text-between";
 import createDeco from "utils/create-deco";
 import AddDecorationsForInvisible from "../utils/invisible";
 
-export default (type: string) => (
+export const createInvisibleDecosForCharacter = (
+  type: string,
   predicate: (text: string) => boolean
 ): AddDecorationsForInvisible => (from, to, doc, decos) =>
   textBetween(from, to, doc).reduce(

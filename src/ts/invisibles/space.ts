@@ -1,5 +1,4 @@
-import { default as character } from "./character";
-import AddDecorationsForInvisible from "../utils/invisible";
+import { createInvisibleDecosForCharacter } from "./character";
 
-export default (predicate = (char: string) => char === " "): AddDecorationsForInvisible =>
-  character("space")(predicate);
+const isSpace = (char: string) => char === " ";
+export default createInvisibleDecosForCharacter("space", isSpace);
