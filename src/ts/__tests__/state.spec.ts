@@ -7,6 +7,7 @@ import { EditorState } from "prosemirror-state";
 import { DecorationSet, EditorView } from "prosemirror-view";
 import hardBreak from "invisibles/hard-break";
 import paragraph from "invisibles/paragraph";
+import nbSpace from "invisibles/nbSpace"
 import { commands, pluginKey } from "state";
 
 const testSchema = new Schema({
