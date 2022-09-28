@@ -31,7 +31,7 @@ const view = new EditorView(document.querySelector("#editor") as Element, {
     ),
     plugins: [
       ...exampleSetup({ schema: mySchema }),
-      createInvisiblesPlugin([hardBreak, paragraph, space]),
+      createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace]),
     ],
   }),
 });
