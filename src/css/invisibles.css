@@ -6,6 +6,7 @@
    * is 'false'. See e.g. https://github.com/ProseMirror/prosemirror/issues/1061
    */
   display: inline-block;
+  position: relative;
 }
 
 .invisible:before {
@@ -28,4 +29,13 @@
 
 .invisible--par:before {
   content: "¶";
+}
+
+.invisible--nb-space:before {
+  font-size: 15px;
+  vertical-align: bottom;
+  content: "^";
+  position: absolute;
+  top: -6px;
+  left: -1px;
 }

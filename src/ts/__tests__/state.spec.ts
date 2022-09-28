@@ -7,6 +7,7 @@ import { EditorState } from "prosemirror-state";
 import { DecorationSet, EditorView } from "prosemirror-view";
 import hardBreak from "invisibles/hard-break";
 import paragraph from "invisibles/paragraph";
+import nbSpace from "invisibles/nbSpace"
 import { commands, pluginKey } from "state";
 
 const testSchema = new Schema({
@@ -20,7 +21,7 @@ const createEditor = (htmlDoc: string, isActive: boolean) => {
   return new EditorView(contentElement, {
     state: EditorState.create({
       doc: DOMParser.fromSchema(testSchema).parse(contentElement),
-      plugins: [createInvisiblesPlugin([hardBreak, paragraph, space], isActive)],
+      plugins: [createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace], isActive)],
     }),
   });
 };

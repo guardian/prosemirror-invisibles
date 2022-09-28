@@ -70,6 +70,7 @@ export { createInvisibleDecosForNode } from "invisibles/node";
 export { default as space } from "invisibles/space";
 export { default as hardBreak } from "invisibles/hard-break";
 export { default as paragraph } from "invisibles/paragraph";
+export { default as nbSpace } from "invisibles/nbSpace"
 
 export { default as createDeco } from "utils/create-deco";
 export { default as textBetween } from "utils/text-between";
