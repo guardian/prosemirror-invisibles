@@ -4,6 +4,7 @@
   "description": "A plugin to show invisibles in prosemirror",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "author": {
     "name": "Richard Beddington",
@@ -13,7 +14,7 @@
     "watch": "run-p watch:*",
     "watch:serve": "vite",
     "watch:typecheck": "tsc --noEmit --watch",
-    "build": "vite build && tsc --declaration --emitDeclarationOnly --outFile dist/index.d.ts",
+    "build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist/",
     "test": "NODE_ENV=test jest test 'test/*.spec.js'",
     "pages": "npm run build-pages && http-server ./pages/dist",
     "prepublishOnly": "yarn build",
