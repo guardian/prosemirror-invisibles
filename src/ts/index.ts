@@ -3,6 +3,7 @@ import { DecorationSet } from "prosemirror-view";
 import AddDecorationsForInvisible from "utils/invisible";
 import getInsertedRanges from "utils/get-inserted-ranges";
 import { getActionFromTransaction, pluginKey, PluginState, reducer } from "state";
+import "../css/invisibles.css"
 
 
 /**
@@ -77,3 +78,4 @@ export { default as textBetween } from "utils/text-between";
 
 export { selectActiveState } from './state'
 export { commands } from "state";
+
