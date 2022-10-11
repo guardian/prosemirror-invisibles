@@ -10,5 +10,6 @@ export default (pos: number, type: string): Decoration => {
   return Decoration.widget(pos, createElement, {
     marks: [],
     key: type,
+    side: 1000, // always render last
   });
 };
