@@ -31,9 +31,12 @@
   content: "¶";
 }
 
+.invisible--nb-space {
+  vertical-align: text-bottom;
+}
+
 .invisible--nb-space:before {
   font-size: 15px;
-  vertical-align: bottom;
   content: "^";
   position: absolute;
   top: -6px;
