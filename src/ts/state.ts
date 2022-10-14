@@ -1,4 +1,9 @@
-import { EditorState, PluginKey, Transaction } from "prosemirror-state";
+import {
+  EditorState,
+  PluginKey,
+  TextSelection,
+  Transaction,
+} from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
 
 /**
@@ -80,10 +85,9 @@ const toggleActiveState = (): Command => (state, dispatch) => {
 const setActiveState = (isActive: boolean): Command => (state, dispatch) => {
   dispatch &&
     dispatch(
-      state.tr.setMeta(
-        PROSEMIRROR_INVISIBLES_ACTION,
-        setActiveStateAction(isActive)
-      )
+      state.tr
+        .setMeta(PROSEMIRROR_INVISIBLES_ACTION, setActiveStateAction(isActive))
+        .setSelection(TextSelection.create(state.tr.doc, 0))
     );
   return true;
 };
