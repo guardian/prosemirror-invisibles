@@ -1,9 +1,17 @@
-import { Transaction } from "prosemirror-state";
+import { EditorState, Transaction } from "prosemirror-state";
 
 type Range = [from: number, to: number];
 
-export default ({ mapping }: Transaction): Range[]  => {
-  const ranges: Range[] = [];
+export default (
+  { mapping, selection }: Transaction,
+  { selection: oldSelection }: EditorState
+): Range[] => {
+  // We must invalidate the ranges touched by old and new selections.
+  const ranges: Range[] = [
+    [selection.from, selection.to],
+    [oldSelection.from, oldSelection.to],
+  ];
+
   mapping.maps.forEach((stepMap, i) => {
     stepMap.forEach((_oldStart, _oldEnd, newStart, newEnd) => {
       ranges.push([
@@ -12,5 +20,6 @@ export default ({ mapping }: Transaction): Range[]  => {
       ]);
     });
   });
+
   return ranges;
 };
