@@ -20,15 +20,16 @@ export const createInvisibleDecosForNode = (
           (deco) => deco.type === type
         );
 
-        // When we render invisibles that appear at the end of lines, we want them
-        // to be included in text selections. We can enable this by adding content
-        // to the decoration that gives it the appropriate width in the DOM.
+        // When we render invisibles that appear at the end of lines, we want
+        // them to appear to be included in text selections. We can enable this
+        // by adding content to the decoration that gives it the appropriate
+        // width in the DOM.
         //
         // Adding content introduces all sorts of odd behaviour under normal
-        // circumstances, including problems with clicking and dragging selections
-        // and flickering cursors as Prosemirror reconciles contenteditable and
-        // DOM positions, so when there isn't a selection, we don't add that
-        // content.
+        // circumstances, including problems with clicking and dragging
+        // selections and flickering cursors as Prosemirror reconciles
+        // contenteditable and DOM positions, so when there isn't a selection,
+        // or the selection doesn't cover the invisible, we don't add content.
         const selectionIsCollapsed = selection?.from === selection?.to;
         const isWithinCurrentSelection =
           selection && decoPos >= selection.from && decoPos <= selection.to;
