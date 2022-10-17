@@ -1,6 +1,6 @@
 import { Node } from "prosemirror-model";
 import createDeco from "utils/create-deco";
-import AddDecorationsForInvisible from "../utils/invisible";
+import AddDecorationsForInvisible, { BuilderTypes } from "../utils/invisible";
 
 export const createInvisibleDecosForNode = (
   type: string,
@@ -8,7 +8,7 @@ export const createInvisibleDecosForNode = (
   predicate: (node: Node) => boolean,
   rendersAtLineEnd = true
 ): AddDecorationsForInvisible => ({
-  shouldRespondToSelectionChange: true,
+  type: BuilderTypes.NODE,
   createDecorations: (from, to, doc, decos, selection) => {
     let newDecos = decos;
     doc.nodesBetween(from, to, (node, pos) => {
@@ -16,7 +16,7 @@ export const createInvisibleDecosForNode = (
         const decoPos = toPosition(node, pos);
         const oldDecos = newDecos.find(
           pos,
-          pos + node.nodeSize,
+          pos + node.nodeSize - 1,
           (deco) => deco.type === type
         );
 
@@ -34,7 +34,7 @@ export const createInvisibleDecosForNode = (
         const isWithinCurrentSelection =
           selection && decoPos >= selection.from && decoPos <= selection.to;
         const selectionIsLongerThanNode =
-          isWithinCurrentSelection && selection.to > pos + node.nodeSize;
+          isWithinCurrentSelection && selection.to >= pos + node.nodeSize;
         const shouldAddContent =
           rendersAtLineEnd &&
           selectionIsLongerThanNode &&

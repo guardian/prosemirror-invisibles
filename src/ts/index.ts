@@ -2,10 +2,10 @@ import {
   Plugin,
   AllSelection,
   EditorState,
-  Selection,
+  Transaction,
 } from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
-import AddDecorationsForInvisible from "utils/invisible";
+import AddDecorationsForInvisible, { BuilderTypes } from "utils/invisible";
 import getInsertedRanges from "utils/get-inserted-ranges";
 import {
   getActionFromTransaction,
@@ -34,19 +34,18 @@ const createInvisiblesPlugin = (
     to: number,
     doc: Node,
     decos: DecorationSet,
-    selection?: Selection,
-    docHasChanged = true
+    tr?: Transaction
   ) =>
-    builders.reduce(
-      (newDecos, { shouldRespondToSelectionChange, createDecorations }) => {
-        if (!docHasChanged && !shouldRespondToSelectionChange) {
-          return newDecos;
-        } else {
-          return createDecorations(from, to, doc, newDecos, selection);
-        }
-      },
-      decos
-    );
+    builders
+      .filter(
+        (builder) =>
+          !tr || (tr.docChanged || builder.type === BuilderTypes.NODE)
+      )
+      .reduce(
+        (newDecos, { createDecorations }) =>
+          createDecorations(from, to, doc, newDecos, tr?.selection),
+        decos
+      );
 
   return new Plugin({
     key: pluginKey,
@@ -75,8 +74,8 @@ const createInvisiblesPlugin = (
 
         const decorations = getInsertedRanges(tr, oldState).reduce(
           (nextDecos, [from, to]) =>
-            addDecosBetween(from, to, newState.doc, nextDecos, tr.selection, tr.docChanged),
-          newPluginState.decorations.map(tr.mapping, tr.doc)
+            addDecosBetween(from, to, newState.doc, nextDecos, tr),
+          newPluginState.decorations.map(tr.mapping, newState.doc)
         );
 
         return { ...newPluginState, decorations };

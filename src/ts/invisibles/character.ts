@@ -1,12 +1,12 @@
 import textBetween from "utils/text-between";
 import createDeco from "utils/create-deco";
-import AddDecorationsForInvisible from "../utils/invisible";
+import AddDecorationsForInvisible, { BuilderTypes } from "../utils/invisible";
 
 export const createInvisibleDecosForCharacter = (
   type: string,
   predicate: (text: string) => boolean
 ): AddDecorationsForInvisible => ({
-  shouldRespondToSelectionChange: false,
+  type: BuilderTypes.CHAR,
   createDecorations: (from, to, doc, decos) =>
     textBetween(from, to, doc).reduce(
       (decos1, { pos, text }) =>
