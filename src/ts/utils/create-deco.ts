@@ -14,14 +14,7 @@ export default (
     span.classList.add("invisible");
     span.classList.add(`invisible--${type}`);
     if (markAsSelected) {
-      const selectedContainer = document.createElement("span");
-
-      selectedContainer.classList.add("invisible__selected-container");
-      span.appendChild(selectedContainer);
-      const selectedMarker = document.createElement("span");
-      selectedMarker.classList.add("invisible__selected-marker");
-      selectedMarker.innerHTML = " ";
-      selectedContainer.appendChild(selectedMarker);
+      span.classList.add("invisible--is-selected");
     }
     return span;
   };

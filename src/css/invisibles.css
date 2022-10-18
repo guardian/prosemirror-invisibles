@@ -5,32 +5,26 @@
    */
   display: inline;
   position: relative;
-  line-height: inherit;
 }
 
 .invisible:before {
-  position: relative;
+  position: absolute;
   caret-color: inherit;
   color: gray;
-  display: inline-block;
+  display: inline;
   font-weight: 400;
   font-style: normal;
-  width: 0;
-  z-index: 1;
-}
-
-.invisible__selected-container {
-  position: absolute;
-  left: 0;
+  line-height: initial;
   top: 0;
+  left: 0;
 }
 
-.invisible__selected-marker {
-  position: relative;
-  /* background-color: rgb(207, 225, 237); */
-  content: " ";
+.ProseMirror-focused .invisible--is-selected::before {
+  background-color: #b4d8ff;
+}
 
-  z-index: 0;
+.invisible--is-selected::before {
+  background-color: #dcdcdc;
 }
 
 .invisible--space:before {
@@ -53,6 +47,6 @@
   font-size: 15px;
   content: "^";
   position: absolute;
-  top: -6px;
+  top: 9px;
   left: -1px;
 }
