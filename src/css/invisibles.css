@@ -12,7 +12,7 @@
 .invisible:before {
   caret-color: inherit;
   color: gray;
-  display: inline;
+  display: inline-block;
   font-weight: 400;
   font-style: normal;
   line-height: 1em;
