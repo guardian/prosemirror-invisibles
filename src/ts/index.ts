@@ -5,8 +5,8 @@ import {
   Transaction,
 } from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
-import AddDecorationsForInvisible, { BuilderTypes } from "utils/invisible";
-import getInsertedRanges from "utils/get-inserted-ranges";
+import AddDecorationsForInvisible from "utils/invisible";
+import getInsertedRanges, { Range } from "utils/get-inserted-ranges";
 import {
   getActionFromTransaction,
   pluginKey,
@@ -14,6 +14,7 @@ import {
   reducer,
 } from "state";
 import { Node } from "prosemirror-model";
+import "../css/invisibles.css";
 
 /**
  * Create a plugin to render invisible characters. Accepts a list of
@@ -36,16 +37,11 @@ const createInvisiblesPlugin = (
     decos: DecorationSet,
     tr?: Transaction
   ) =>
-    builders
-      .filter(
-        (builder) =>
-          !tr || (tr.docChanged || builder.type === BuilderTypes.NODE)
-      )
-      .reduce(
-        (newDecos, { createDecorations }) =>
-          createDecorations(from, to, doc, newDecos, tr?.selection),
-        decos
-      );
+    builders.reduce(
+      (newDecos, { createDecorations }) =>
+        createDecorations(from, to, doc, newDecos, tr?.selection),
+      decos
+    );
 
   return new Plugin({
     key: pluginKey,
@@ -72,9 +68,22 @@ const createInvisiblesPlugin = (
           return newPluginState;
         }
 
-        const decorations = getInsertedRanges(tr, oldState).reduce(
-          (nextDecos, [from, to]) =>
-            addDecosBetween(from, to, newState.doc, nextDecos, tr),
+        const insertedRanges = getInsertedRanges(tr);
+        const selectedRanges: Range[] = [
+          [tr.selection.from, tr.selection.to],
+          [oldState.selection.from, oldState.selection.to],
+        ];
+        const allRanges = insertedRanges.concat(selectedRanges);
+
+        const decorations = builders.reduce(
+          (newDecos, { createDecorations, type }) => {
+            const rangesToApply = type === "NODE" ? allRanges : insertedRanges;
+            return rangesToApply.reduce(
+              (nextDecos, [from, to]) =>
+                createDecorations(from, to, tr.doc, nextDecos, tr?.selection),
+              newDecos
+            );
+          },
           newPluginState.decorations.map(tr.mapping, newState.doc)
         );
 
