@@ -55,8 +55,8 @@ describe("Invisibles plugin", () => {
     const firstParaInvisible = elements.item(0);
     const secondParaInvisible = elements.item(1);
 
-    expect(firstParaInvisible.textContent).toEqual("\u2002");
-    expect(secondParaInvisible.textContent).toEqual("");
+    expect(firstParaInvisible.children.length).toEqual(1);
+    expect(secondParaInvisible.children.length).toEqual(0);
   });
 
   it("should remove content from node invisibles when they are no longer included in the selection", () => {
