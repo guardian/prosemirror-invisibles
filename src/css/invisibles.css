@@ -5,6 +5,7 @@
    */
   display: inline;
   position: relative;
+  pointer-events: none;
 }
 
 .invisible:before {
