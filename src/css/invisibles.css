@@ -5,7 +5,7 @@
    * with carets and inline elements when contenteditable
    * is 'false'. See e.g. https://github.com/ProseMirror/prosemirror/issues/1061
    */
-  display: inline;
+  display: inline-block;
   position: relative;
 }
 
