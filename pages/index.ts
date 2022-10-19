@@ -12,6 +12,7 @@ import {
   space,
   nbSpace,
   commands,
+  heading,
 } from "../src/ts";
 
 import "prosemirror-view/style/prosemirror.css";
@@ -31,7 +32,7 @@ const view = new EditorView(document.querySelector("#editor") as Element, {
     ),
     plugins: [
       ...exampleSetup({ schema: mySchema }),
-      createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace]),
+      createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, heading]),
     ],
   }),
 });

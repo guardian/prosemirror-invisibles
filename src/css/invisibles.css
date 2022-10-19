@@ -61,6 +61,10 @@
   content: "¶";
 }
 
+.invisible--heading:before {
+  content: "¶";
+}
+
 .invisible--nb-space {
   vertical-align: text-bottom;
 }
