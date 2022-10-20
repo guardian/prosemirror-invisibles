@@ -1,10 +1,20 @@
-import { Plugin, AllSelection, EditorState } from "prosemirror-state";
+import {
+  Plugin,
+  AllSelection,
+  EditorState,
+  Transaction,
+} from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
 import AddDecorationsForInvisible from "utils/invisible";
-import getInsertedRanges from "utils/get-inserted-ranges";
-import { getActionFromTransaction, pluginKey, PluginState, reducer } from "state";
-import "../css/invisibles.css"
-
+import getInsertedRanges, { Range } from "utils/get-inserted-ranges";
+import {
+  getActionFromTransaction,
+  pluginKey,
+  PluginState,
+  reducer,
+} from "state";
+import { Node } from "prosemirror-model";
+import "../css/invisibles.css";
 
 /**
  * Create a plugin to render invisible characters. Accepts a list of
@@ -20,8 +30,18 @@ const createInvisiblesPlugin = (
   builders: AddDecorationsForInvisible[],
   isActive = true
 ): Plugin<PluginState> => {
-  const addDecosBetween: AddDecorationsForInvisible = (from, to, doc, decos) =>
-    builders.reduce((newDecos, fn) => fn(from, to, doc, newDecos), decos);
+  const addDecosBetween = (
+    from: number,
+    to: number,
+    doc: Node,
+    decos: DecorationSet,
+    tr?: Transaction
+  ) =>
+    builders.reduce(
+      (newDecos, { createDecorations }) =>
+        createDecorations(from, to, doc, newDecos, tr?.selection),
+      decos
+    );
 
   return new Plugin({
     key: pluginKey,
@@ -38,19 +58,42 @@ const createInvisiblesPlugin = (
           ),
         };
       },
-      apply: (tr, pluginState, _, state) => {
+      apply: (tr, pluginState, oldState, newState) => {
         const newPluginState = reducer(
           pluginState,
           getActionFromTransaction(tr)
         );
-        if (!tr.docChanged) {
+
+        if (!tr.docChanged && oldState.selection === newState.selection) {
           return newPluginState;
         }
-        const decorations = getInsertedRanges(tr).reduce(
-          (nextDecos, [from, to]) =>
-            addDecosBetween(from, to, state.doc, nextDecos),
-          newPluginState.decorations.map(tr.mapping, tr.doc)
+
+        const insertedRanges = getInsertedRanges(tr);
+        const selectedRanges: Range[] = [
+          [tr.selection.from, tr.selection.to],
+          // We must include the old selection to ensure that any decorations that
+          // are no longer selected are correctly amended.
+          [
+            oldState.selection.from,
+            // We are operating on selections based on the old document that may no
+            // longer exist, so we cap the selection to the size of the document.
+            Math.min(oldState.selection.to, tr.doc.nodeSize - 2),
+          ],
+        ];
+        const allRanges = insertedRanges.concat(selectedRanges);
+
+        const decorations = builders.reduce(
+          (newDecos, { createDecorations, type }) => {
+            const rangesToApply = type === "NODE" ? allRanges : insertedRanges;
+            return rangesToApply.reduce(
+              (nextDecos, [from, to]) =>
+                createDecorations(from, to, tr.doc, nextDecos, tr?.selection),
+              newDecos
+            );
+          },
+          newPluginState.decorations.map(tr.mapping, newState.doc)
         );
+
         return { ...newPluginState, decorations };
       },
     },
@@ -71,11 +114,10 @@ export { createInvisibleDecosForNode } from "invisibles/node";
 export { default as space } from "invisibles/space";
 export { default as hardBreak } from "invisibles/hard-break";
 export { default as paragraph } from "invisibles/paragraph";
-export { default as nbSpace } from "invisibles/nbSpace"
+export { default as nbSpace } from "invisibles/nbSpace";
 
 export { default as createDeco } from "utils/create-deco";
 export { default as textBetween } from "utils/text-between";
 
-export { selectActiveState } from './state'
+export { selectActiveState } from "./state";
 export { commands } from "state";
-
