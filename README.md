@@ -29,7 +29,7 @@ And import the css from `prosemirror-invisibles/dist/invisibles.css`.
 
 ## A note on line-break invisibles and selections
 
-At the time of writing, Chrome, Firefox and Safari all provide limited feedback when rendering a selection that includes a line break – the selection and cursor does not change until content after the break is highlighted.
+At the time of writing, Chrome, Firefox and Safari all provide limited feedback when rendering a selection that includes a line break – the selection and cursor does not change until content after the break is highlighted. Below, you can see there is a selection position that includes the linebreak which is not visible to users:
 
 ![No clear indication when we've selected across the paragraph boundary. Taken in Firefox](https://user-images.githubusercontent.com/7767575/196673262-27f8bd5f-ea43-4139-805e-59576d06aaab.gif)
 
