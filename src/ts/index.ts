@@ -71,7 +71,14 @@ const createInvisiblesPlugin = (
         const insertedRanges = getInsertedRanges(tr);
         const selectedRanges: Range[] = [
           [tr.selection.from, tr.selection.to],
-          [oldState.selection.from, oldState.selection.to],
+          // We must include the old selection to ensure that any decorations that
+          // are no longer selected are correctly amended.
+          [
+            oldState.selection.from,
+            // We are operating on selections based on the old document that may no
+            // longer exist, so we cap the selection to the size of the document.
+            Math.min(oldState.selection.to, tr.doc.nodeSize - 2),
+          ],
         ];
         const allRanges = insertedRanges.concat(selectedRanges);
 

@@ -11,6 +11,7 @@ export const createInvisibleDecosForNode = (
   type: BuilderTypes.NODE,
   createDecorations: (from, to, doc, decos, selection) => {
     let newDecos = decos;
+
     doc.nodesBetween(from, to, (node, pos) => {
       if (predicate(node)) {
         const decoPos = toPosition(node, pos);

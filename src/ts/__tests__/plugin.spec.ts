@@ -1,4 +1,4 @@
-import { TextSelection } from "prosemirror-state";
+import { AllSelection, TextSelection } from "prosemirror-state";
 import { br, doc, p } from "prosemirror-test-builder";
 
 import { createEditor } from "./helpers";
@@ -90,5 +90,16 @@ describe("Invisibles plugin", () => {
       const elements = view.dom.querySelectorAll(".invisible--break");
       expect(elements.length).toBe(2);
     }
+  });
+
+  it("should correctly handle selections which reduce the document size", () => {
+    const docNode = doc(p("1 2 3 4", br(), br(), p("5 6 7 8")));
+    const view = createEditor(docNode);
+
+    const removeDoc = () => view.dispatch(
+      view.state.tr.setSelection(new AllSelection(view.state.doc)).deleteSelection()
+    );
+
+    expect(removeDoc).not.toThrow();
   });
 });
