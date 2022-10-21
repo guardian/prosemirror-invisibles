@@ -3,8 +3,9 @@ import {
   AllSelection,
   EditorState,
   Transaction,
+  TextSelection,
 } from "prosemirror-state";
-import { DecorationSet } from "prosemirror-view";
+import { DecorationSet, EditorView } from "prosemirror-view";
 import AddDecorationsForInvisible from "utils/invisible";
 import getInsertedRanges, { Range } from "utils/get-inserted-ranges";
 import {
@@ -101,6 +102,23 @@ const createInvisiblesPlugin = (
       decorations: function (state: EditorState) {
         const { isActive, decorations } = this.getState(state);
         return isActive ? decorations : DecorationSet.empty;
+      },
+      handleDOMEvents: {
+        blur: (view: EditorView, event: FocusEvent) => {
+          // When we blur the editor but remain focused on the page, the DOM
+          // will lose its selection but Prosemirror will not. This will cause
+          // prosemirror-elements' selection emulation decorations to remain on
+          // the page. We work around this by manually resetting the view selection
+          // here unless the document selection falls outside of the page.
+          const selectionFallsOutsideOfPage = document.activeElement === event.target;
+          if (!selectionFallsOutsideOfPage) {
+            view.dispatch(
+              view.state.tr.setSelection(
+                new TextSelection(view.state.doc.resolve(1))
+              )
+            );
+          }
+        },
       },
     },
   });
