@@ -32,7 +32,9 @@ const view = new EditorView(document.querySelector("#editor") as Element, {
     ),
     plugins: [
       ...exampleSetup({ schema: mySchema }),
-      createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, heading]),
+      createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, heading], {
+        displayLineEndSelection: true,
+      }),
     ],
   }),
 });

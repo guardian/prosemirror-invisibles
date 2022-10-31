@@ -1,21 +1,22 @@
-import {
-  Plugin,
-  AllSelection,
-  EditorState,
-  Transaction,
-  TextSelection,
-} from "prosemirror-state";
+import { Plugin, AllSelection, EditorState } from "prosemirror-state";
 import { DecorationSet, EditorView } from "prosemirror-view";
 import AddDecorationsForInvisible from "utils/invisible";
 import getInsertedRanges, { Range } from "utils/get-inserted-ranges";
 import {
+  commands,
   getActionFromTransaction,
   pluginKey,
   PluginState,
   reducer,
 } from "state";
-import { Node } from "prosemirror-model";
 import "../css/invisibles.css";
+
+interface InvisiblesOptions {
+  // Should we display invisibles when the editor is first instantiated?
+  isActive?: boolean;
+  // Add styling to emulate the selection of line end characters with CSS.
+  displayLineEndSelection?: boolean;
+}
 
 /**
  * Create a plugin to render invisible characters. Accepts a list of
@@ -29,34 +30,30 @@ import "../css/invisibles.css";
  */
 const createInvisiblesPlugin = (
   builders: AddDecorationsForInvisible[],
-  isActive = true
-): Plugin<PluginState> => {
-  const addDecosBetween = (
-    from: number,
-    to: number,
-    doc: Node,
-    decos: DecorationSet,
-    tr?: Transaction
-  ) =>
-    builders.reduce(
-      (newDecos, { createDecorations }) =>
-        createDecorations(from, to, doc, newDecos, tr?.selection),
-      decos
-    );
-
-  return new Plugin({
+  { isActive = true, displayLineEndSelection = false }: InvisiblesOptions = {}
+): Plugin<PluginState> =>
+  new Plugin({
     key: pluginKey,
     state: {
       init: (_, state) => {
         const { from, to } = new AllSelection(state.doc);
+        const decorations = builders.reduce(
+          (newDecos, { createDecorations }) =>
+            createDecorations(
+              from,
+              to,
+              state.doc,
+              newDecos,
+              state.selection,
+              displayLineEndSelection
+            ),
+          DecorationSet.empty
+        );
+
         return {
           isActive,
-          decorations: addDecosBetween(
-            from,
-            to,
-            state.doc,
-            DecorationSet.empty
-          ),
+          shouldShowLineEndSelectionDecorations: true,
+          decorations,
         };
       },
       apply: (tr, pluginState, oldState, newState) => {
@@ -65,7 +62,12 @@ const createInvisiblesPlugin = (
           getActionFromTransaction(tr)
         );
 
-        if (!tr.docChanged && oldState.selection === newState.selection) {
+        const documentBlurStateHasNotChanged =
+          pluginState.shouldShowLineEndSelectionDecorations === newPluginState.shouldShowLineEndSelectionDecorations;
+        const docAndSelectionHaveNotChanged =
+          !tr.docChanged && oldState.selection === newState.selection;
+
+        if (documentBlurStateHasNotChanged && docAndSelectionHaveNotChanged) {
           return newPluginState;
         }
 
@@ -82,13 +84,22 @@ const createInvisiblesPlugin = (
           ],
         ];
         const allRanges = insertedRanges.concat(selectedRanges);
+        const shouldDisplayLineEndDecorations =
+          displayLineEndSelection && newPluginState.shouldShowLineEndSelectionDecorations;
 
         const decorations = builders.reduce(
           (newDecos, { createDecorations, type }) => {
             const rangesToApply = type === "NODE" ? allRanges : insertedRanges;
             return rangesToApply.reduce(
               (nextDecos, [from, to]) =>
-                createDecorations(from, to, tr.doc, nextDecos, tr?.selection),
+                createDecorations(
+                  from,
+                  to,
+                  tr.doc,
+                  nextDecos,
+                  tr?.selection,
+                  shouldDisplayLineEndDecorations
+                ),
               newDecos
             );
           },
@@ -108,21 +119,24 @@ const createInvisiblesPlugin = (
           // When we blur the editor but remain focused on the page, the DOM
           // will lose its selection but Prosemirror will not. This will cause
           // prosemirror-elements' selection emulation decorations to remain on
-          // the page. We work around this by manually resetting the view selection
-          // here unless the document selection falls outside of the page.
-          const selectionFallsOutsideOfPage = document.activeElement === event.target;
+          // the page. We store state to manually turn off the selection
+          // emulation in this case.
+          const selectionFallsOutsideOfPage =
+            document.activeElement === event.target;
           if (!selectionFallsOutsideOfPage) {
-            view.dispatch(
-              view.state.tr.setSelection(
-                new TextSelection(view.state.doc.resolve(1))
-              )
-            );
+            commands.setFocusedState(false)(view.state, view.dispatch);
           }
+
+          return false;
+        },
+        focus: (view: EditorView) => {
+          commands.setFocusedState(true)(view.state, view.dispatch);
+
+          return false;
         },
       },
     },
   });
-};
 
 export { createInvisiblesPlugin };
 

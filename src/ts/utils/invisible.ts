@@ -19,7 +19,8 @@ type AddDecorationsForInvisible = {
     to: number,
     doc: Node,
     decos: DecorationSet,
-    selection?: Selection
+    selection?: Selection,
+    displayLineEndSelection?: boolean
   ) => DecorationSet;
 };
 

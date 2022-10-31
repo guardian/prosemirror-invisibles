@@ -6,10 +6,9 @@ export const createInvisibleDecosForNode = (
   type: string,
   toPosition: (node: Node, pos: number) => number,
   predicate: (node: Node) => boolean,
-  shouldMarkAsSelected = true
 ): AddDecorationsForInvisible => ({
   type: BuilderTypes.NODE,
-  createDecorations: (from, to, doc, decos, selection) => {
+  createDecorations: (from, to, doc, decos, selection, shouldMarkAsSelected) => {
     let newDecos = decos;
 
     doc.nodesBetween(from, to, (node, pos) => {
