@@ -7,7 +7,10 @@ import { DecorationSet } from "prosemirror-view";
 
 export interface PluginState {
   decorations: DecorationSet;
-  isActive: boolean;
+  shouldShowInvisibles: boolean;
+  // Should we alter invisible decorations to emulate the selection of line end
+  // characters?
+  shouldShowLineEndSelectionDecorations: boolean;
 }
 
 export const pluginKey = new PluginKey<PluginState>(
@@ -18,7 +21,7 @@ export const pluginKey = new PluginKey<PluginState>(
  * Selectors
  */
 export const selectActiveState = (state: EditorState): boolean =>
-  !!pluginKey.getState(state)?.isActive;
+  !!pluginKey.getState(state)?.shouldShowInvisibles;
 
 /**
  * Actions
@@ -29,14 +32,22 @@ export const getActionFromTransaction = (
   tr: Transaction
 ): Actions | undefined => tr.getMeta(PROSEMIRROR_INVISIBLES_ACTION);
 
-const SET_ACTIVE_STATE = "SET_ACTIVE_STATE";
+const SET_SHOW_INVISIBLES_STATE = "SET_SHOW_INVISIBLES_STATE" as const;
+const SET_FOCUS_STATE = "BLUR_DOCUMENT" as const;
 
-const setActiveStateAction = (isActive: boolean) => ({
-  type: SET_ACTIVE_STATE,
-  payload: { isActive },
+const setShowInvisiblesStateAction = (shouldShowInvisibles: boolean) => ({
+  type: SET_SHOW_INVISIBLES_STATE,
+  payload: { shouldShowInvisibles },
 });
 
-export type Actions = ReturnType<typeof setActiveStateAction>;
+const setFocusedStateAction = (isFocused: boolean) => ({
+  type: SET_FOCUS_STATE,
+  payload: { isFocused },
+});
+
+export type Actions =
+  | ReturnType<typeof setShowInvisiblesStateAction>
+  | ReturnType<typeof setFocusedStateAction>;
 
 /**
  * Reducer
@@ -50,8 +61,14 @@ export const reducer = (
     return state;
   }
   switch (action.type) {
-    case SET_ACTIVE_STATE:
-      return { ...state, isActive: action.payload.isActive };
+    case SET_SHOW_INVISIBLES_STATE:
+      return { ...state, shouldShowInvisibles: action.payload.shouldShowInvisibles };
+    case SET_FOCUS_STATE: {
+      return {
+        ...state,
+        shouldShowLineEndSelectionDecorations: action.payload.isFocused,
+      };
+    }
     default:
       return state;
   }
@@ -71,21 +88,32 @@ const toggleActiveState = (): Command => (state, dispatch) => {
     dispatch(
       state.tr.setMeta(
         PROSEMIRROR_INVISIBLES_ACTION,
-        setActiveStateAction(!pluginKey.getState(state)?.isActive)
+        setShowInvisiblesStateAction(!pluginKey.getState(state)?.shouldShowInvisibles)
       )
     );
   return true;
 };
 
-const setActiveState = (isActive: boolean): Command => (state, dispatch) => {
+const setActiveState = (shouldShowInvisibles: boolean): Command => (state, dispatch) => {
   dispatch &&
     dispatch(
       state.tr.setMeta(
         PROSEMIRROR_INVISIBLES_ACTION,
-        setActiveStateAction(isActive)
+        setShowInvisiblesStateAction(shouldShowInvisibles)
       )
     );
   return true;
 };
 
-export const commands = { setActiveState, toggleActiveState };
+const setFocusedState = (isFocused: boolean): Command => (state, dispatch) => {
+  dispatch &&
+    dispatch(
+      state.tr.setMeta(
+        PROSEMIRROR_INVISIBLES_ACTION,
+        setFocusedStateAction(isFocused)
+      )
+    );
+  return true;
+};
+
+export const commands = { setActiveState, toggleActiveState, setFocusedState };
