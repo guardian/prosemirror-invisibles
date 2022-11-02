@@ -40,3 +40,9 @@ Including content in the decorations representing invisible characters introduce
 ![Selecting invisibles provides a clear indication when we've selected across the paragraph boundary. Taken in Firefox](https://user-images.githubusercontent.com/7767575/196673269-9f8794a6-91c0-432b-a4c6-ec54a9a12e40.gif)
 
 Adapting this styling may be necessary in your own editor to ensure that the impostor span's colour and size are correct. We recommend removing this styling if this behaviour isn't desirable. Finally, we'd love a better solution to this problem – any suggestions most welcome!
+
+## Running locally 
+
+To run the sandbox locally run: 
+
+```yarn watch```
