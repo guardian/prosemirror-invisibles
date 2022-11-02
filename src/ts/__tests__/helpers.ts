@@ -11,7 +11,7 @@ import { EditorView } from "prosemirror-view";
 
 export const createEditor = (
   docNode = doc(),
-  isActive = true,
+  shouldShowInvisibles = true,
   displayLineEndSelection = true
 ): EditorView => {
   const contentElement = document.createElement("content");
@@ -22,7 +22,7 @@ export const createEditor = (
       schema,
       plugins: [
         createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace], {
-          isActive,
+          shouldShowInvisibles: shouldShowInvisibles,
           displayLineEndSelection,
         }),
       ],

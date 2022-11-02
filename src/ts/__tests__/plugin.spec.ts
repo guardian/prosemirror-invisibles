@@ -6,11 +6,11 @@ import { createEditor } from "./helpers";
 
 describe("Invisibles plugin", () => {
   it("should not render invisibles when the plugin is not active", () => {
-    const view = createEditor(doc(p("1 2 3 4")));
+    const view = createEditor(doc(p("1 2 3 4")), false);
 
     const elements = view.dom.querySelectorAll(".invisible--space");
 
-    expect(elements.length).toEqual(3);
+    expect(elements.length).toEqual(0);
   });
 
   it("should render character invisibles", () => {

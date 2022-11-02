@@ -16,13 +16,13 @@ const testSchema = new Schema({
   marks: schema.spec.marks,
 });
 
-const createEditor = (htmlDoc: string, isActive: boolean) => {
+const createEditor = (htmlDoc: string, shouldShowInvisibles: boolean) => {
   const contentElement = document.createElement("content");
   contentElement.innerHTML = htmlDoc;
   return new EditorView(contentElement, {
     state: EditorState.create({
       doc: DOMParser.fromSchema(testSchema).parse(contentElement),
-      plugins: [createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, heading], { isActive })],
+      plugins: [createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, heading], { shouldShowInvisibles: shouldShowInvisibles })],
     }),
   });
 };
@@ -35,14 +35,14 @@ describe("State management", () => {
       const editor = createEditor("<p>Example doc</p>", false);
 
       const pluginState = pluginKey.getState(editor.state)
-      expect(pluginState?.isActive).toBe(false)
+      expect(pluginState?.shouldShowInvisibles).toBe(false)
     });
     it("should provide a command to set the active state of the plugin", () => {
       const editor = createEditor("<p>Example doc</p>", true);
       commands.setActiveState(false)(editor.state, editor.dispatch)
 
       const pluginState = pluginKey.getState(editor.state)
-      expect(pluginState?.isActive).toBe(false)
+      expect(pluginState?.shouldShowInvisibles).toBe(false)
     });
     it("should show decorations when the active state is true", () => {
       const editor = createEditor("<p>Example doc with four spaces</p>", true);

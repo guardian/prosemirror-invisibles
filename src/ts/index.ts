@@ -12,8 +12,7 @@ import {
 import "../css/invisibles.css";
 
 interface InvisiblesOptions {
-  // Should we display invisibles when the editor is first instantiated?
-  isActive?: boolean;
+  shouldShowInvisibles?: boolean;
   // Add styling to emulate the selection of line end characters with CSS.
   displayLineEndSelection?: boolean;
 }
@@ -30,7 +29,7 @@ interface InvisiblesOptions {
  */
 const createInvisiblesPlugin = (
   builders: AddDecorationsForInvisible[],
-  { isActive = true, displayLineEndSelection = false }: InvisiblesOptions = {}
+  { shouldShowInvisibles = true, displayLineEndSelection = false }: InvisiblesOptions = {}
 ): Plugin<PluginState> =>
   new Plugin({
     key: pluginKey,
@@ -51,7 +50,7 @@ const createInvisiblesPlugin = (
         );
 
         return {
-          isActive,
+          shouldShowInvisibles: shouldShowInvisibles,
           shouldShowLineEndSelectionDecorations: true,
           decorations,
         };
@@ -111,8 +110,8 @@ const createInvisiblesPlugin = (
     },
     props: {
       decorations: function (state: EditorState) {
-        const { isActive, decorations } = this.getState(state);
-        return isActive ? decorations : DecorationSet.empty;
+        const { shouldShowInvisibles, decorations } = this.getState(state);
+        return shouldShowInvisibles ? decorations : DecorationSet.empty;
       },
       handleDOMEvents: {
         blur: (view: EditorView, event: FocusEvent) => {
