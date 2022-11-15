@@ -53,7 +53,7 @@ const createInvisiblesPlugin = (
           shouldShowInvisibles: shouldShowInvisibles,
           shouldShowLineEndSelectionDecorations: true,
           decorations,
-        };
+        } as PluginState;
       },
       apply: (tr, pluginState, oldState, newState) => {
         const newPluginState = reducer(
@@ -110,7 +110,7 @@ const createInvisiblesPlugin = (
     },
     props: {
       decorations: function (state: EditorState) {
-        const { shouldShowInvisibles, decorations } = this.getState(state);
+        const { shouldShowInvisibles, decorations } = this.getState(state) || {};
         return shouldShowInvisibles ? decorations : DecorationSet.empty;
       },
       handleDOMEvents: {
