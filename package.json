@@ -15,7 +15,7 @@
     "watch:serve": "vite",
     "watch:typecheck": "tsc --noEmit --watch",
     "build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist/",
-    "test": "NODE_ENV=test jest test 'test/*.spec.js'",
+    "test": "jest",
     "pages": "npm run build-pages && http-server ./pages/dist",
     "prepublishOnly": "yarn build",
     "format": "prettier --write './src/**/*.ts'",
@@ -64,7 +64,7 @@
       "**/?(*.)+(spec|test).[jt]s?(x)"
     ],
     "preset": "ts-jest",
-    "testEnvironment": "jsDom"
+    "testEnvironment": "jest-environment-jsdom"
   },
   "peerDependencies": {
     "prosemirror-state": "^1.4.2",
