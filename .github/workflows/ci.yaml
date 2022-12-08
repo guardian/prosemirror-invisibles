@@ -1,0 +1,23 @@
+# Find full documentation here https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+name: CI
+
+on:
+  pull_request:
+
+  # Manual invocation.
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
