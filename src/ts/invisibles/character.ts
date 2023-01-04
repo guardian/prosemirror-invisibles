@@ -1,5 +1,5 @@
-import textBetween from "utils/text-between";
-import createDeco from "utils/create-deco";
+import textBetween from "../utils/text-between";
+import createDeco from "../utils/create-deco";
 import AddDecorationsForInvisible, { BuilderTypes } from "../utils/invisible";
 
 export const createInvisibleDecosForCharacter = (

@@ -1,5 +1,5 @@
 import { Node } from "prosemirror-model";
-import createDeco from "utils/create-deco";
+import createDeco from "../utils/create-deco";
 import AddDecorationsForInvisible, { BuilderTypes } from "../utils/invisible";
 
 export const createInvisibleDecosForNode = (

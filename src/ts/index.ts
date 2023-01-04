@@ -1,14 +1,14 @@
 import { Plugin, AllSelection, EditorState } from "prosemirror-state";
 import { DecorationSet, EditorView } from "prosemirror-view";
-import AddDecorationsForInvisible from "utils/invisible";
-import getInsertedRanges, { Range } from "utils/get-inserted-ranges";
+import AddDecorationsForInvisible from "./utils/invisible";
+import getInsertedRanges, { Range } from "./utils/get-inserted-ranges";
 import {
   commands,
   getActionFromTransaction,
   pluginKey,
   PluginState,
   reducer,
-} from "state";
+} from "./state";
 import "../css/invisibles.css";
 
 interface InvisiblesOptions {
@@ -139,17 +139,17 @@ const createInvisiblesPlugin = (
 
 export { createInvisiblesPlugin };
 
-export { createInvisibleDecosForCharacter } from "invisibles/character";
-export { createInvisibleDecosForNode } from "invisibles/node";
+export { createInvisibleDecosForCharacter } from "./invisibles/character";
+export { createInvisibleDecosForNode } from "./invisibles/node";
 
-export { default as space } from "invisibles/space";
-export { default as hardBreak } from "invisibles/hard-break";
-export { default as paragraph } from "invisibles/paragraph";
-export { default as nbSpace } from "invisibles/nbSpace";
-export { default as heading } from "invisibles/heading";
+export { default as space } from "./invisibles/space";
+export { default as hardBreak } from "./invisibles/hard-break";
+export { default as paragraph } from "./invisibles/paragraph";
+export { default as nbSpace } from "./invisibles/nbSpace";
+export { default as heading } from "./invisibles/heading";
 
-export { default as createDeco } from "utils/create-deco";
-export { default as textBetween } from "utils/text-between";
+export { default as createDeco } from "./utils/create-deco";
+export { default as textBetween } from "./utils/text-between";
 
 export { selectActiveState } from "./state";
-export { commands } from "state";
+export { commands } from "./state";

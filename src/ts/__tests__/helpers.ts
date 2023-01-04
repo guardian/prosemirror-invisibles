@@ -4,7 +4,7 @@ import {
   nbSpace,
   paragraph,
   hardBreak,
-} from "index";
+} from "../index";
 import { doc, schema } from "prosemirror-test-builder";
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";

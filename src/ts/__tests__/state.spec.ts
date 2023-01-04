@@ -1,15 +1,15 @@
 import { createInvisiblesPlugin } from "../";
-import space from "invisibles/space";
+import space from "../invisibles/space";
 import { addListNodes } from "prosemirror-schema-list";
 import { schema } from "prosemirror-schema-basic";
 import { Schema, DOMParser } from "prosemirror-model";
 import { EditorState } from "prosemirror-state";
 import { DecorationSet, EditorView } from "prosemirror-view";
-import hardBreak from "invisibles/hard-break";
-import paragraph from "invisibles/paragraph";
-import nbSpace from "invisibles/nbSpace"
-import heading from "invisibles/heading";
-import { commands, pluginKey } from "state";
+import hardBreak from "../invisibles/hard-break";
+import paragraph from "../invisibles/paragraph";
+import nbSpace from "../invisibles/nbSpace"
+import heading from "../invisibles/heading";
+import { commands, pluginKey } from "../state";
 import AddDecorationsForInvisible from "../utils/invisible";
 
 const testSchema = new Schema({
