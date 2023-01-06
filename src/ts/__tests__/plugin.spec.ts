@@ -1,6 +1,6 @@
 import { AllSelection, TextSelection } from "prosemirror-state";
 import { br, doc, p } from "prosemirror-test-builder";
-import { commands } from "state";
+import { commands } from "../state";
 
 import { createEditor } from "./helpers";
 
