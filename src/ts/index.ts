@@ -144,6 +144,7 @@ export { createInvisibleDecosForNode } from "./invisibles/node";
 
 export { default as space } from "./invisibles/space";
 export { default as hardBreak } from "./invisibles/hard-break";
+export { default as softHyphen } from "./invisibles/soft-hyphen";
 export { default as paragraph } from "./invisibles/paragraph";
 export { default as nbSpace } from "./invisibles/nbSpace";
 export { default as heading } from "./invisibles/heading";
