@@ -49,6 +49,10 @@
   background-color: #dcdcdc;
 }
 
+.invisible--soft-hyphen:before {
+  content: "-";
+}
+
 .invisible--space:before {
   content: "·";
 }

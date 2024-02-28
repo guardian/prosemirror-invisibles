@@ -4,6 +4,7 @@ import {
   nbSpace,
   paragraph,
   hardBreak,
+  softHyphen,
 } from "../index";
 import { doc, schema } from "prosemirror-test-builder";
 import { EditorState } from "prosemirror-state";
@@ -21,7 +22,7 @@ export const createEditor = (
       doc: docNode,
       schema,
       plugins: [
-        createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace], {
+        createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, softHyphen], {
           shouldShowInvisibles: shouldShowInvisibles,
           displayLineEndSelection,
         }),

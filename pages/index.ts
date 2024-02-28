@@ -7,6 +7,7 @@ import { exampleSetup } from "prosemirror-example-setup";
 import applyDevTools from "prosemirror-dev-tools";
 import {
   createInvisiblesPlugin,
+  softHyphen,
   hardBreak,
   paragraph,
   space,
@@ -32,7 +33,7 @@ const view = new EditorView(document.querySelector("#editor") as Element, {
     ),
     plugins: [
       ...exampleSetup({ schema: mySchema }),
-      createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, heading], {
+      createInvisiblesPlugin([hardBreak, paragraph, space, nbSpace, heading, softHyphen], {
         displayLineEndSelection: true,
       }),
     ],
