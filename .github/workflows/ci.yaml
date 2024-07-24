@@ -21,3 +21,37 @@ jobs:
           node-version-file: '.nvmrc'
       - run: yarn install --frozen-lockfile
       - run: yarn test
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [CI]
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    if: github.ref == 'refs/heads/main' ||  github.ref == 'refs/heads/beta'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: yarn changeset publish
+          title: "🦋 Release package updates"
+          commit: "Bump package versions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
