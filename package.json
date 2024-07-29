@@ -23,6 +23,7 @@
     "publish-pages": "git subtree push --prefix pages/dist origin gh-pages"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "@types/jest": "^29.2.3",
     "@types/prosemirror-dev-tools": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
