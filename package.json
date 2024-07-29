@@ -20,9 +20,11 @@
     "prepublishOnly": "yarn build",
     "format": "prettier --write './src/**/*.ts'",
     "build-pages": "vite build -c vite.config.pages.ts",
-    "publish-pages": "git subtree push --prefix pages/dist origin gh-pages"
+    "publish-pages": "git subtree push --prefix pages/dist origin gh-pages",
+    "release": "npx changeset"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "@types/jest": "^29.2.3",
     "@types/prosemirror-dev-tools": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
