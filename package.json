@@ -20,8 +20,7 @@
     "prepublishOnly": "yarn build",
     "format": "prettier --write './src/**/*.ts'",
     "build-pages": "vite build -c vite.config.pages.ts",
-    "publish-pages": "git subtree push --prefix pages/dist origin gh-pages",
-    "release": "npx changeset"
+    "publish-pages": "git subtree push --prefix pages/dist origin gh-pages"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
