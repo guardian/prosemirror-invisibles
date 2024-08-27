@@ -3,8 +3,8 @@ import { Selection } from "prosemirror-state";
 import { DecorationSet } from "prosemirror-view";
 
 export const BuilderTypes = {
-  NODE: 'NODE',
-  CHAR: 'CHAR'
+  NODE: "NODE",
+  CHAR: "CHAR",
 } as const;
 
 type BuilderTypes = keyof typeof BuilderTypes;
@@ -20,7 +20,7 @@ type AddDecorationsForInvisible = {
     doc: Node,
     decos: DecorationSet,
     selection?: Selection,
-    displayLineEndSelection?: boolean
+    displayLineEndSelection?: boolean,
   ) => DecorationSet;
 };
 

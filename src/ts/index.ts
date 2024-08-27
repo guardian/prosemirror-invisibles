@@ -29,7 +29,10 @@ interface InvisiblesOptions {
  */
 const createInvisiblesPlugin = (
   builders: AddDecorationsForInvisible[],
-  { shouldShowInvisibles = true, displayLineEndSelection = false }: InvisiblesOptions = {}
+  {
+    shouldShowInvisibles = true,
+    displayLineEndSelection = false,
+  }: InvisiblesOptions = {},
 ): Plugin<PluginState> =>
   new Plugin({
     key: pluginKey,
@@ -44,9 +47,9 @@ const createInvisiblesPlugin = (
               state.doc,
               newDecos,
               state.selection,
-              displayLineEndSelection
+              displayLineEndSelection,
             ),
-          DecorationSet.empty
+          DecorationSet.empty,
         );
 
         return {
@@ -58,11 +61,12 @@ const createInvisiblesPlugin = (
       apply: (tr, pluginState, oldState, newState) => {
         const newPluginState = reducer(
           pluginState,
-          getActionFromTransaction(tr)
+          getActionFromTransaction(tr),
         );
 
         const documentBlurStateHasNotChanged =
-          pluginState.shouldShowLineEndSelectionDecorations === newPluginState.shouldShowLineEndSelectionDecorations;
+          pluginState.shouldShowLineEndSelectionDecorations ===
+          newPluginState.shouldShowLineEndSelectionDecorations;
         const docAndSelectionHaveNotChanged =
           !tr.docChanged && oldState.selection === newState.selection;
 
@@ -84,7 +88,8 @@ const createInvisiblesPlugin = (
         ];
         const allRanges = insertedRanges.concat(selectedRanges);
         const shouldDisplayLineEndDecorations =
-          displayLineEndSelection && newPluginState.shouldShowLineEndSelectionDecorations;
+          displayLineEndSelection &&
+          newPluginState.shouldShowLineEndSelectionDecorations;
 
         const decorations = builders.reduce(
           (newDecos, { createDecorations, type }) => {
@@ -97,12 +102,12 @@ const createInvisiblesPlugin = (
                   tr.doc,
                   nextDecos,
                   tr?.selection,
-                  shouldDisplayLineEndDecorations
+                  shouldDisplayLineEndDecorations,
                 ),
-              newDecos
+              newDecos,
             );
           },
-          newPluginState.decorations.map(tr.mapping, newState.doc)
+          newPluginState.decorations.map(tr.mapping, newState.doc),
         );
 
         return { ...newPluginState, decorations };
@@ -110,7 +115,8 @@ const createInvisiblesPlugin = (
     },
     props: {
       decorations: function (state: EditorState) {
-        const { shouldShowInvisibles, decorations } = this.getState(state) || {};
+        const { shouldShowInvisibles, decorations } =
+          this.getState(state) || {};
         return shouldShowInvisibles ? decorations : DecorationSet.empty;
       },
       handleDOMEvents: {

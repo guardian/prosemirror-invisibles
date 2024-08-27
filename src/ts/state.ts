@@ -14,7 +14,7 @@ export interface PluginState {
 }
 
 export const pluginKey = new PluginKey<PluginState>(
-  "PROSEMIRROR_INVISIBLES_PLUGIN"
+  "PROSEMIRROR_INVISIBLES_PLUGIN",
 );
 
 /**
@@ -29,7 +29,7 @@ export const selectActiveState = (state: EditorState): boolean =>
 
 const PROSEMIRROR_INVISIBLES_ACTION = "PM_INVISIBLES_ACTION";
 export const getActionFromTransaction = (
-  tr: Transaction
+  tr: Transaction,
 ): Actions | undefined => tr.getMeta(PROSEMIRROR_INVISIBLES_ACTION);
 
 const SET_SHOW_INVISIBLES_STATE = "SET_SHOW_INVISIBLES_STATE" as const;
@@ -55,14 +55,17 @@ export type Actions =
 
 export const reducer = (
   state: PluginState,
-  action: Actions | undefined
+  action: Actions | undefined,
 ): PluginState => {
   if (!action) {
     return state;
   }
   switch (action.type) {
     case SET_SHOW_INVISIBLES_STATE:
-      return { ...state, shouldShowInvisibles: action.payload.shouldShowInvisibles };
+      return {
+        ...state,
+        shouldShowInvisibles: action.payload.shouldShowInvisibles,
+      };
     case SET_FOCUS_STATE: {
       return {
         ...state,
@@ -80,7 +83,7 @@ export const reducer = (
 
 type Command = (
   state: EditorState,
-  dispatch?: (tr: Transaction) => void
+  dispatch?: (tr: Transaction) => void,
 ) => boolean;
 
 const toggleActiveState = (): Command => (state, dispatch) => {
@@ -88,32 +91,38 @@ const toggleActiveState = (): Command => (state, dispatch) => {
     dispatch(
       state.tr.setMeta(
         PROSEMIRROR_INVISIBLES_ACTION,
-        setShowInvisiblesStateAction(!pluginKey.getState(state)?.shouldShowInvisibles)
-      )
+        setShowInvisiblesStateAction(
+          !pluginKey.getState(state)?.shouldShowInvisibles,
+        ),
+      ),
     );
   return true;
 };
 
-const setActiveState = (shouldShowInvisibles: boolean): Command => (state, dispatch) => {
-  dispatch &&
-    dispatch(
-      state.tr.setMeta(
-        PROSEMIRROR_INVISIBLES_ACTION,
-        setShowInvisiblesStateAction(shouldShowInvisibles)
-      )
-    );
-  return true;
-};
+const setActiveState =
+  (shouldShowInvisibles: boolean): Command =>
+  (state, dispatch) => {
+    dispatch &&
+      dispatch(
+        state.tr.setMeta(
+          PROSEMIRROR_INVISIBLES_ACTION,
+          setShowInvisiblesStateAction(shouldShowInvisibles),
+        ),
+      );
+    return true;
+  };
 
-const setFocusedState = (isFocused: boolean): Command => (state, dispatch) => {
-  dispatch &&
-    dispatch(
-      state.tr.setMeta(
-        PROSEMIRROR_INVISIBLES_ACTION,
-        setFocusedStateAction(isFocused)
-      )
-    );
-  return true;
-};
+const setFocusedState =
+  (isFocused: boolean): Command =>
+  (state, dispatch) => {
+    dispatch &&
+      dispatch(
+        state.tr.setMeta(
+          PROSEMIRROR_INVISIBLES_ACTION,
+          setFocusedStateAction(isFocused),
+        ),
+      );
+    return true;
+  };
 
 export const commands = { setActiveState, toggleActiveState, setFocusedState };
