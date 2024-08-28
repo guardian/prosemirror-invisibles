@@ -7,7 +7,7 @@ export default (
   pos: number,
   type: string,
   // Mark the decoration as selected.
-  markAsSelected = false
+  markAsSelected = false,
 ): Decoration => {
   const createElement = () => {
     const span = document.createElement("span");

@@ -33,7 +33,7 @@ describe("Invisibles plugin", () => {
     const view = createEditor(doc(p("1 2 3 4")));
 
     view.dispatch(
-      view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 9))
+      view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 9)),
     );
 
     const elements = view.dom.querySelectorAll(".invisible--space");
@@ -58,7 +58,7 @@ describe("Invisibles plugin", () => {
     it("should add content to node invisibles to help emulate selection when the selection includes the invisible and the next node", () => {
       const view = createEditor(doc(p("1 2 3 4"), p("5 6 7 8")));
       view.dispatch(
-        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13))
+        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13)),
       );
 
       const elements = view.dom.querySelectorAll(".invisible--par");
@@ -72,10 +72,10 @@ describe("Invisibles plugin", () => {
     it("should remove content from node to help emulate selection invisibles when they are no longer included in the selection", () => {
       const view = createEditor(doc(p("1 2 3 4"), p("5 6 7 8")));
       view.dispatch(
-        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13))
+        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13)),
       );
       view.dispatch(
-        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 2))
+        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 2)),
       );
 
       const elements = view.dom.querySelectorAll(".invisible--par");
@@ -95,8 +95,8 @@ describe("Invisibles plugin", () => {
       for (let curPos = docNode.nodeSize - 2; curPos > 0; curPos--) {
         view.dispatch(
           view.state.tr.setSelection(
-            TextSelection.create(view.state.doc, curPos, curPos)
-          )
+            TextSelection.create(view.state.doc, curPos, curPos),
+          ),
         );
 
         const elements = view.dom.querySelectorAll(".invisible--break");
@@ -112,7 +112,7 @@ describe("Invisibles plugin", () => {
         view.dispatch(
           view.state.tr
             .setSelection(new AllSelection(view.state.doc))
-            .deleteSelection()
+            .deleteSelection(),
         );
 
       expect(removeDoc).not.toThrow();
@@ -121,7 +121,7 @@ describe("Invisibles plugin", () => {
     it("should not render selection emulation decos when the document is blurred", () => {
       const view = createEditor(doc(p("1 2 3 4"), p("5 6 7 8")));
       view.dispatch(
-        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13))
+        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13)),
       );
 
       commands.setFocusedState(false)(view.state, view.dispatch);
@@ -137,7 +137,7 @@ describe("Invisibles plugin", () => {
     it("should render selection emulation decos when the document is refocused", () => {
       const view = createEditor(doc(p("1 2 3 4"), p("5 6 7 8")));
       view.dispatch(
-        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13))
+        view.state.tr.setSelection(TextSelection.create(view.state.doc, 2, 13)),
       );
 
       commands.setFocusedState(false)(view.state, view.dispatch);

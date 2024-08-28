@@ -8,7 +8,14 @@ export const createInvisibleDecosForNode = (
   predicate: (node: Node) => boolean,
 ): AddDecorationsForInvisible => ({
   type: BuilderTypes.NODE,
-  createDecorations: (from, to, doc, decos, selection, shouldMarkAsSelected) => {
+  createDecorations: (
+    from,
+    to,
+    doc,
+    decos,
+    selection,
+    shouldMarkAsSelected,
+  ) => {
     let newDecos = decos;
 
     doc.nodesBetween(from, to, (node, pos) => {
@@ -17,7 +24,7 @@ export const createInvisibleDecosForNode = (
         const oldDecos = newDecos.find(
           pos,
           pos + node.nodeSize - 1,
-          (deco) => deco.type === type
+          (deco) => deco.type === type,
         );
 
         // When we render invisibles that appear at the end of lines, mark
