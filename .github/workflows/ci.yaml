@@ -29,6 +29,7 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+      id-token: write
     if: github.ref == 'refs/heads/main' ||  github.ref == 'refs/heads/beta'
     steps:
       - uses: actions/checkout@v3
