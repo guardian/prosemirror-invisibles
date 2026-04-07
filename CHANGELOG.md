@@ -1,5 +1,11 @@
 # @guardian/prosemirror-invisibles
 
+## 3.1.3
+
+### Patch Changes
+
+- e53fb3b: Set project repository
+
 ## 3.1.2
 
 ### Patch Changes
