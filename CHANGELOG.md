@@ -1,5 +1,11 @@
 # @guardian/prosemirror-invisibles
 
+## 3.1.2
+
+### Patch Changes
+
+- 07a2bb2: no-op release to test migration to NPM trusted publishing
+
 ## 3.1.1
 
 ### Patch Changes
