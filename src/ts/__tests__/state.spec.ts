@@ -40,119 +40,56 @@ const getDocDecorations = (editor: EditorView) =>
   (editor.someProp("decorations")?.(editor.state) as DecorationSet).find();
 
 describe("State management", () => {
-  describe("Active state", () => {
-    it("should set the active state initially", () => {
-      const editor = createEditor([space], "<p>Example doc</p>", false);
 
-      const pluginState = pluginKey.getState(editor.state);
-      expect(pluginState?.shouldShowInvisibles).toBe(false);
-    });
-    it("should provide a command to set the active state of the plugin", () => {
-      const editor = createEditor([space], "<p>Example doc</p>", true);
-      commands.setActiveState(false)(editor.state, editor.dispatch);
+  it("should set the active state initially", () => {
+    const editor = createEditor([space], "<p>Example doc</p>", false);
 
-      const pluginState = pluginKey.getState(editor.state);
-      expect(pluginState?.shouldShowInvisibles).toBe(false);
-    });
-    it("should show decorations when the active state is true", () => {
-      const editor = createEditor(
-        [space],
-        "<p>Example doc with four spaces</p>",
-        true,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(4);
-    });
-    it("should hide decorations when the active state is false", () => {
-      const editor = createEditor(
-        [space],
-        "<p>Example doc with four spaces</p>",
-        false,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(0);
-    });
-    it("should show decorations when the active state is true, with 2 hard breaks", () => {
-      const editor = createEditor(
-        [hardBreak],
-        "<p>Example doc with four spaces </br>Some more text</br></p>",
-        true,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(2);
-    });
-    it("should hide decorations when the active state is false, with 2 hard breaks", () => {
-      const editor = createEditor(
-        [hardBreak],
-        "<p>Example doc with four spaces </br>Some more text</br></p>",
-        false,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(0);
-    });
-    it("should show decorations when the active state is true, with 2 paragraphs", () => {
-      const editor = createEditor(
-        [paragraph],
-        "<p>Example doc with two paragraphs</p> <p> Some more test text </p>",
-        true,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(2);
-    });
-    it("should hide decorations when the active state is false, with 2 paragraphs", () => {
-      const editor = createEditor(
-        [paragraph],
-        "<p>Example doc with two paragraphs</p> <p> Some more test text </p>",
-        false,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(0);
-    });
-    it("should hide decorations when the active state is true, with 2 headings", () => {
-      const editor = createEditor(
-        [heading],
-        "<p>Example <h2>Heading</h2> with another <h2>heading</h2> Some more text</p>",
-        true,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(2);
-    });
-    it("should hide decorations when the active state is true, with 2 headings", () => {
-      const editor = createEditor(
-        [heading],
-        "<p>Example <h2>Heading</h2> with another <h2>heading</h2> Some more text</p>",
-        false,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(0);
-    });
-    it("should hide decorations when the active state is true, with 2 nbspace", () => {
-      const editor = createEditor(
-        [nbSpace],
-        "<p>Example <h2>Heading</h2> with &nbsp; another&nbsp; space <h2>heading</h2> Some more text</p>",
-        true,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(2);
-    });
-    it("should hide decorations when the active state is false, with 2 nbspace", () => {
-      const editor = createEditor(
-        [nbSpace],
-        "<p>Example <h2>Heading</h2> with &nbsp; another&nbsp; space <h2>heading</h2> Some more text</p>",
-        false,
-      );
-
-      const currentDecorations = getDocDecorations(editor);
-      expect(currentDecorations?.length).toBe(0);
-    });
+    const pluginState = pluginKey.getState(editor.state);
+    expect(pluginState?.shouldShowInvisibles).toBe(false);
   });
+
+  it("should provide a command to set the active state of the plugin", () => {
+    const editor = createEditor([space], "<p>Example doc</p>", true);
+    commands.setActiveState(false)(editor.state, editor.dispatch);
+
+    const pluginState = pluginKey.getState(editor.state);
+    expect(pluginState?.shouldShowInvisibles).toBe(false);
+  });
+
+  const invisiblesAndDocs = [
+    { description: "2 hard breaks", invisibles: [hardBreak], docStr: "<p>Example doc with four spaces </br>Some more text</br></p>", count: 2 },
+    { description: "2 paragraphs", invisibles: [paragraph], docStr: "<p>Example doc with two paragraphs</p> <p> Some more test text </p>", count: 2 },
+    { description: "2 headings", invisibles: [heading], docStr: "<p>Example <h2>Heading</h2> with another <h2>heading</h2> Some more text</p>", count: 2 },
+    { description: "2 non-breaking spaces", invisibles: [nbSpace], docStr: "<p>Example <h2>Heading</h2> with &nbsp; another&nbsp; space <h2>heading</h2> Some more text</p>", count: 2 },
+  ];
+
+  invisiblesAndDocs.forEach(({ description, invisibles, docStr, count }) => {
+    it(`should hide decorations when the active state is false: ${description} `, () => {
+      const editor = createEditor(
+        invisibles,
+        docStr,
+        false,
+      );
+
+      const currentDecorations = getDocDecorations(editor);
+      expect(currentDecorations?.length).toBe(0);
+
+      const stateDecorations = pluginKey.getState(editor.state);
+      expect(stateDecorations?.length).toBe(0);
+    });
+
+    it(`should show decorations when the active state is true: ${description} `, () => {
+      const editor = createEditor(
+        invisibles,
+        docStr,
+        true,
+      );
+
+      const currentDecorations = getDocDecorations(editor);
+      expect(currentDecorations?.length).toBe(count);
+
+      const stateDecorations = pluginKey.getState(editor.state);
+      expect(stateDecorations?.length).toBe(count);
+    });
+  })
 });
