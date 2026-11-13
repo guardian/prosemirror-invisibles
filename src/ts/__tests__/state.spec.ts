@@ -39,6 +39,9 @@ const createEditor = (
 const getDocDecorations = (editor: EditorView) =>
   (editor.someProp("decorations")?.(editor.state) as DecorationSet).find();
 
+const getStateDecorations = (editor: EditorView) =>
+  pluginKey.getState(editor.state)?.decorations.find(undefined, undefined, () => true);
+
 describe("State management", () => {
 
   it("should set the active state initially", () => {
@@ -74,7 +77,7 @@ describe("State management", () => {
       const currentDecorations = getDocDecorations(editor);
       expect(currentDecorations?.length).toBe(0);
 
-      const stateDecorations = pluginKey.getState(editor.state);
+      const stateDecorations = getStateDecorations(editor);
       expect(stateDecorations?.length).toBe(0);
     });
 
@@ -88,7 +91,7 @@ describe("State management", () => {
       const currentDecorations = getDocDecorations(editor);
       expect(currentDecorations?.length).toBe(count);
 
-      const stateDecorations = pluginKey.getState(editor.state);
+      const stateDecorations = getStateDecorations(editor);
       expect(stateDecorations?.length).toBe(count);
     });
   })

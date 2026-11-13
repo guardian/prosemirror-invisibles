@@ -39,7 +39,7 @@ const createInvisiblesPlugin = (
     state: {
       init: (_, state) => {
         const { from, to } = new AllSelection(state.doc);
-        const decorations = builders.reduce(
+        const decorations = shouldShowInvisibles ? builders.reduce(
           (newDecos, { createDecorations }) =>
             createDecorations(
               from,
@@ -50,7 +50,7 @@ const createInvisiblesPlugin = (
               displayLineEndSelection,
             ),
           DecorationSet.empty,
-        );
+        ) : DecorationSet.empty
 
         return {
           shouldShowInvisibles: shouldShowInvisibles,
@@ -63,6 +63,10 @@ const createInvisiblesPlugin = (
           pluginState,
           getActionFromTransaction(tr),
         );
+
+        if (!newPluginState.shouldShowInvisibles) {
+          return { ...newPluginState, decorations: DecorationSet.empty };
+        }
 
         const documentBlurStateHasNotChanged =
           pluginState.shouldShowLineEndSelectionDecorations ===
